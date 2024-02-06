@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "164148488292",
+    "project_id": "final-year-project-67cd1",
+    "storage_bucket": "final-year-project-67cd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164148488292:android:80b22aa015e3c82941d771",
+        "android_client_info": {
+          "package_name": "com.example.black_sigatoka"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsr3EnzOPuuoluhXbA035VwzPeFRSJ4Ic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
