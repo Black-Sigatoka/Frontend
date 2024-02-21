@@ -1,4 +1,5 @@
-import 'package:black_sigatoka/screens/register_page.dart';
+
+import 'package:black_sigatoka/screens/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,9 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
+        fontFamily: 'Poppins',
       ),
-      home: const RegisterScreen(title: 'Register'),
+      home: const HomeScreen(),
     );
   }
 }
