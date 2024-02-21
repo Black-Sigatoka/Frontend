@@ -17,7 +17,14 @@ class RegisterScreen extends StatelessWidget {
               width: 30,
             ),
             const SizedBox(width: 10),
-            const Text('Register'),
+            Text(
+              'Register'.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
       ),
