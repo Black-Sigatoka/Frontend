@@ -12,7 +12,7 @@ class RegisterScreen extends StatelessWidget {
         title: Row(
           children: [
             Image.asset(
-              'FlutterLogo',
+              'assets/images/Logo.png',
               height: 30,
               width: 30,
             ),
