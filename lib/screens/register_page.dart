@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:black_sigatoka/custom_widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -9,20 +10,25 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
               'assets/images/Logo.png',
               height: 30,
               width: 30,
             ),
-            const SizedBox(width: 10),
-            Text(
-              'Register'.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+            const SizedBox(width: 5),
+            Center(
+              child: Text(
+                'Register'.toUpperCase(),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black
+                ),
               ),
             ),
           ],
@@ -31,13 +37,13 @@ class RegisterScreen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               'Create your account',
               style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
               ),
             ),
             SizedBox(height: 16),
@@ -54,12 +60,10 @@ class RegisterScreen extends StatelessWidget {
               obscureText: true,
             ),
             SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                // Register button logic
-              },
-              child: Text('Register'),
-            ),
+            CustomButton(
+              text: 'Register',
+              onPressed: loginButtonPressed
+              ),
             SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: () {

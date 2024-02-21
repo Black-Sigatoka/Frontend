@@ -42,3 +42,13 @@ void homeButtonPressed(BuildContext context) {
   );
 }
 
+void loginButtonPressed(BuildContext context) {
+  //logic for home button
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => RegisterScreen(title: 'Register',)
+    )
+  );
+}
+
