@@ -75,13 +75,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-    fonts:
-      - family: Poppins
-        fonts:
-          - asset: fonts/Poppins/Poppins-Regular.ttf
-          - asset: fonts/Poppins/Poppins-SemiBold.ttf
-          - asset: fonts/Poppins/Poppins-Medium.ttf
-          - asset: fonts/Poppins/Poppins-Bold.ttf
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: fonts/Poppins/Poppins-Regular.ttf
+        - asset: fonts/Poppins/Poppins-SemiBold.ttf
+        - asset: fonts/Poppins/Poppins-Medium.ttf
+        - asset: fonts/Poppins/Poppins-Bold.ttf
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
