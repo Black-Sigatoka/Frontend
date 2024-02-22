@@ -3,11 +3,11 @@
 import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
 import 'package:black_sigatoka/custom_widgets/custom_button.dart';
 import 'package:black_sigatoka/custom_widgets/custom_textformfield.dart';
-import 'package:black_sigatoka/screens/home_page.dart';
+import 'package:black_sigatoka/screens/login_page.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key, required String title});
+  const RegisterScreen({super.key});
 
   final String buttonText = 'Register';
 
@@ -109,7 +109,7 @@ class RegisterScreen extends StatelessWidget {
                 TextButton(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
                   },
                   child: Text(
                     'Sign in',

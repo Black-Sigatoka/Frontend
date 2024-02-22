@@ -42,7 +42,7 @@ void homeButtonPressed(BuildContext context) {
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => RegisterScreen(title: 'Register',)
+      builder: (context) => RegisterScreen()
     )
   );
 }
@@ -52,7 +52,7 @@ void registerButtonPressed(BuildContext context) {
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => LoginScreen(title: 'Login',)
+      builder: (context) => LoginScreen()
     )
   );
 }
