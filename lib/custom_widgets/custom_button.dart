@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:black_sigatoka/screens/register_page.dart';
+import 'package:black_sigatoka/screens/login_page.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -18,14 +19,14 @@ class CustomButton extends StatelessWidget {
         ),
         backgroundColor: Color.fromARGB(255, 127, 181, 230)
       ),
-      onPressed: () => homeButtonPressed(context),
+      onPressed: () => registerButtonPressed(context),
       child: Container(
         padding: EdgeInsets.symmetric(
           horizontal: 95,
           vertical: 15
         ),
         child: Text(
-          'Get Started',
+          text,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
@@ -41,7 +42,7 @@ void homeButtonPressed(BuildContext context) {
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => RegisterScreen(title: 'Register',)
+      builder: (context) => RegisterScreen()
     )
   );
 }
@@ -51,7 +52,7 @@ void registerButtonPressed(BuildContext context) {
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => RegisterScreen(title: 'Register',)
+      builder: (context) => LoginScreen()
     )
   );
 }

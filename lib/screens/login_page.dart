@@ -3,13 +3,13 @@
 import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
 import 'package:black_sigatoka/custom_widgets/custom_button.dart';
 import 'package:black_sigatoka/custom_widgets/custom_textformfield.dart';
-import 'package:black_sigatoka/screens/login_page.dart';
+import 'package:black_sigatoka/screens/register_page.dart';
 import 'package:flutter/material.dart';
 
-class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
-  final String buttonText = 'Register';
+  final String buttonText = 'Login';
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class RegisterScreen extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight), // Adjust size as needed
         child: CustomAppBar(
-          title: 'Register',
+          title: 'Login',
         ),
       ),
       body: Padding(
@@ -28,7 +28,7 @@ class RegisterScreen extends StatelessWidget {
           children: [
             SizedBox(height: 20),
             Text(
-              'Create your account',
+              'Log into your account',
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -36,24 +36,14 @@ class RegisterScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             CustomTextFormField(
-              label: 'Enter your full name',
+              label: 'Enter your email',
               onChanged: (value) {
                 //handles changes to the text form field
               },
             ),
             SizedBox(height: 16),
             CustomTextFormField(
-              label: 'Enter your email',
-              onChanged: (value) {},
-            ),
-            SizedBox(height: 16),
-            CustomTextFormField(
-              label: 'Enter your passsword',
-              onChanged: (value) {},
-            ),
-            SizedBox(height: 16),
-            CustomTextFormField(
-              label: 'Confirm Password',
+              label: 'Enter your password',
               onChanged: (value) {},
             ),
             SizedBox(height: 16),
@@ -103,16 +93,16 @@ class RegisterScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Already have an account?',
+                  "Don't have an account?",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()));
+                        MaterialPageRoute(builder: (context) => RegisterScreen()));
                   },
                   child: Text(
-                    'Sign in',
+                    'Sign up',
                     style: TextStyle(color: Color.fromARGB(255, 127, 181, 230)),
                   ),
                 ),
