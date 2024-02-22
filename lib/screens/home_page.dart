@@ -13,7 +13,10 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const FlutterLogo(size: 150),
+            Image.asset(
+              'assets/images/Logo.png',
+              height: 150,         
+            ),
             const SizedBox(height: 20),
             Text(
               'Sigatoka Mobile Application'.toUpperCase(),
