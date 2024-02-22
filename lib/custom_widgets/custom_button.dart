@@ -16,10 +16,14 @@ class CustomButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
+        backgroundColor: Color.fromARGB(255, 127, 181, 230)
       ),
       onPressed: () => homeButtonPressed(context),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+        padding: EdgeInsets.symmetric(
+          horizontal: 95,
+          vertical: 15
+        ),
         child: Text(
           'Get Started',
           style: TextStyle(
@@ -42,7 +46,7 @@ void homeButtonPressed(BuildContext context) {
   );
 }
 
-void loginButtonPressed(BuildContext context) {
+void registerButtonPressed(BuildContext context) {
   //logic for home button
   Navigator.push(
     context,
