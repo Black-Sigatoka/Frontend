@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
 import 'package:black_sigatoka/custom_widgets/custom_button.dart';
 import 'package:black_sigatoka/custom_widgets/custom_textformfield.dart';
 import 'package:black_sigatoka/screens/home_page.dart';
@@ -14,33 +15,10 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       //backgroundColor: Color.fromRGBO(217, 217, 217, 100),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 30),
-          child: Row(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Center(
-                child: Image.asset(
-                  'assets/images/Logo.png',
-                  height: 30,
-                  width: 30,
-                ),
-              ),
-              const SizedBox(width: 5),
-              Center(
-                child: Text(
-                  'Register'.toUpperCase(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-              ),
-            ],
-          ),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight), // Adjust size as needed
+        child: CustomAppBar(
+          title: 'Register',
         ),
       ),
       body: Padding(
