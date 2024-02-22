@@ -26,7 +26,7 @@ class CustomButton extends StatelessWidget {
           vertical: 15
         ),
         child: Text(
-          'Get Started',
+          text,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
