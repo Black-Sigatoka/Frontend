@@ -97,11 +97,11 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.person,
-                      size: 20,
-                      color: Colors.black,
+                  children: [
+                    Image.asset(
+                      'assets/icons/google_icon.png',
+                      height: 25,
+                      width: 25,
                     ),
                     SizedBox(width: 10),
                     Text(
