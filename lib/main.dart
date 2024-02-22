@@ -1,3 +1,4 @@
+
 import 'package:black_sigatoka/screens/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         fontFamily: 'Poppins',
+  
       ),
       home: const HomeScreen(),
     );
