@@ -16,26 +16,31 @@ class RegisterScreen extends StatelessWidget {
       //backgroundColor: Color.fromRGBO(217, 217, 217, 100),
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/Logo.png',
-              height: 30,
-              width: 30,
-            ),
-            const SizedBox(width: 5),
-            Center(
-              child: Text(
-                'Register'.toUpperCase(),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 30),
+          child: Row(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Center(
+                child: Image.asset(
+                  'assets/images/Logo.png',
+                  height: 30,
+                  width: 30,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(width: 5),
+              Center(
+                child: Text(
+                  'Register'.toUpperCase(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: Padding(
