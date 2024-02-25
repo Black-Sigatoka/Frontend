@@ -12,7 +12,20 @@
           "package_name": "com.example.black_sigatoka"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "164148488292-q8cn0f8utf3hq6imgb8u5e1lo9215jes.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.black_sigatoka",
+            "certificate_hash": "70f414955e65da697a1617dac00af2da8f49402e"
+          }
+        },
+        {
+          "client_id": "164148488292-9l9m5nmei1utjr2d4pkt5jlknfmuln17.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAsr3EnzOPuuoluhXbA035VwzPeFRSJ4Ic"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "164148488292-9l9m5nmei1utjr2d4pkt5jlknfmuln17.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "164148488292-0ke3f95em33m5dfon3ou2tga1bh3vq0v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.blackSigatoka"
+              }
+            }
+          ]
         }
       }
     }
