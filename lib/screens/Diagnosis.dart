@@ -31,13 +31,13 @@ class _DiagnosisState extends State<Diagnosis> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Diagnosis'),
+      appBar: const CustomAppBar(title: 'Diagnosis'),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Container(
-            padding: EdgeInsets.only(top:10),
+            padding: const EdgeInsets.only(top:10),
             height: 150,
             width:200,
             color: Colors.grey[300], // Placeholder background color
@@ -53,7 +53,7 @@ class _DiagnosisState extends State<Diagnosis> {
               color: Colors.grey[400], // Image icon color
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.only(left:74.0,right:74.0),
             child: ElevatedButton(
@@ -62,26 +62,26 @@ class _DiagnosisState extends State<Diagnosis> {
                 _showImagePicker(context);
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.lightBlue, // Light blue color
+                backgroundColor: Colors.lightBlue, // Light blue color
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0), // Adjust border radius
                 ),
-                minimumSize: Size(2, 35), // Adjust width and height
+                minimumSize: const Size(2, 35), // Adjust width and height
               ),
 
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.photo_camera_back),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: EdgeInsets.only(left: 8),
                     child: Text("Scan"),
                   ),
                 ],
               ),
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.only(left:74.0,right:74.0),
             child: ElevatedButton(
@@ -90,19 +90,19 @@ class _DiagnosisState extends State<Diagnosis> {
                 _showRecommendations(context);
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.lightBlue, // Light blue color
+                backgroundColor: Colors.lightBlue, // Light blue color
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0), // Adjust border radius
                 ),
-                minimumSize: Size(2, 35), // Adjust width and height
+                minimumSize: const Size(2, 35), // Adjust width and height
               ),
 
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
 
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: EdgeInsets.only(left: 8),
                     child: Text("Diagnose"),
                   ),
                 ],
@@ -123,16 +123,16 @@ class _DiagnosisState extends State<Diagnosis> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.camera),
-                title: Text('Take a Picture'),
+                leading: const Icon(Icons.camera),
+                title: const Text('Take a Picture'),
                 onTap: () {
                   Navigator.pop(context);
                   _pickImage(ImageSource.camera);
                 },
               ),
               ListTile(
-                leading: Icon(Icons.photo),
-                title: Text('Choose from Gallery'),
+                leading: const Icon(Icons.photo),
+                title: const Text('Choose from Gallery'),
                 onTap: () {
                   Navigator.pop(context);
                   _pickImage(ImageSource.gallery);
@@ -151,9 +151,9 @@ void _showRecommendations(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
 
-        title: Center(child: Text("Severity Level")),
-        content:   Padding(
-          padding: const EdgeInsets.only(left:90.0),
+        title: const Center(child: Text("Severity Level")),
+        content:   const Padding(
+          padding: EdgeInsets.only(left:90.0),
           child: Text("High",style: TextStyle(
               color: Colors.green
           ),
@@ -165,7 +165,7 @@ void _showRecommendations(BuildContext context) {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Recommendations"),
+              child: const Text("Recommendations"),
             ),
           ),
         ],
