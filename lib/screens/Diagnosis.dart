@@ -1,4 +1,5 @@
 import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
+import 'package:black_sigatoka/screens/recommendations_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -162,9 +163,10 @@ void _showRecommendations(BuildContext context) {
         actions: [
           Center(
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const RecommendationScreen(diseaseSeverity: '',)));
+                  },
               child: const Text("Recommendations"),
             ),
           ),

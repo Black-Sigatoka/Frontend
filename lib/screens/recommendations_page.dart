@@ -8,7 +8,7 @@ import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
 class RecommendationScreen extends StatefulWidget {
   final String diseaseSeverity;
 
-  const RecommendationScreen({Key? key, required this.diseaseSeverity}) : super(key: key);
+  const RecommendationScreen({Key? key,  required this.diseaseSeverity}) : super(key: key);
 
   @override
   _RecommendationScreenState createState() => _RecommendationScreenState();
@@ -27,17 +27,6 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
   print (response.text);
 }
 
-//   try {
-//     final response = await gemini.text( 
-//       prompt: "Provide recommendations for Black Sigatoka disease based on the severity level: $severity.",
-//       maxTokens: 100, // Adjust token limit as needed (higher for more details)
-//     );
-//     return response.text ?? "No recommendations available at this time.";
-//   } catch (error) {
-//     print(error); // Handle potential errors during API call
-//     return "An error occurred. Please try again later.";
-//   }
-// }
 
 
   @override
