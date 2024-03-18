@@ -1,45 +1,59 @@
-// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
+// ignore: duplicate_ignore
+// ignore: library_private_types_in_public_api, //prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api
+
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
-
+//import 'package:dotenv/dotenv.dart' as dotenv;
 
 class RecommendationScreen extends StatefulWidget {
   final String diseaseSeverity;
 
-  const RecommendationScreen({Key? key,  required this.diseaseSeverity}) : super(key: key);
+  const RecommendationScreen({Key? key, required this.diseaseSeverity})
+      : super(key: key);
 
   @override
   _RecommendationScreenState createState() => _RecommendationScreenState();
 }
 
 class _RecommendationScreenState extends State<RecommendationScreen> {
+  Future<String?> getRecommendations(String severity) async {
+    try {
 
- getRecommendations(String severity) async {
-    // Access your API key as an environment variable (see "Set up your API key" above)
-  final apiKey = String.fromEnvironment('AIzaSyBUQOV99dTBg9b-_SMIAljliGyyeWx24Qg');
+      final apiKey = Platform.environment['API_KEY'];
 
-  // For text-only input, use the gemini-pro model
-  final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
-  final content = [Content.text('Provide recommendations for Black Sigatoka disease based on the severity level: $severity.')];
-  final response = await model.generateContent(content);
-  print (response.text);
-}
+      if (apiKey == null) {
+        print('No \$API_KEY environment variable');
+        exit(1);
+      }
 
-
+      final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
+      final content = [
+        Content.text(
+            'Provide recommendations for Black Sigatoka disease based on the severity level:')
+      ];
+      final response = await model.generateContent(content);
+      return response.text;
+    } catch (error) {
+      print(error); // Log the error for debugging
+      return "An error occurred while fetching recommendations.";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight), // Adjust size as needed
         child: CustomAppBar(
-          title: 'Register',
+          title: 'Recom',
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Text(
@@ -49,13 +63,35 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () async {
-                String recommendation = await getRecommendations(widget.diseaseSeverity);
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const AlertDialog(
+                      title: Text('Fetching Recommendations...'),
+                      content: Row(
+                        children: [
+                          CircularProgressIndicator(),
+                          SizedBox(width: 10.0),
+                          Text('Please wait'),
+                        ],
+                      ),
+                    );
+                  },
+                );
+
+                String? recommendation =
+                    await getRecommendations(widget.diseaseSeverity);
+                Navigator.pop(context); // Close the initial progress dialog
+
+                List<String> recommendations = recommendation!.split('.');
+                String firstRecommendation = recommendations.first.trim();
+
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text('AI Chatbot Recommendation'),
-                      content: Text(recommendation),
+                      title: const Text('AI Chatbot Recommendations'),
+                      content: Text(firstRecommendation),
                     );
                   },
                 );

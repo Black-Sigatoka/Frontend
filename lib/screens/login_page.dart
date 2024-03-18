@@ -4,6 +4,7 @@ import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
 import 'package:black_sigatoka/custom_widgets/custom_button.dart';
 import 'package:black_sigatoka/custom_widgets/custom_textformfield.dart';
 import 'package:black_sigatoka/screens/register_page.dart';
+//import 'package:black_sigatoka/screens/Diagnosis.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -49,7 +50,7 @@ class LoginScreen extends StatelessWidget {
             SizedBox(height: 16),
             CustomButton(
               text: buttonText,
-              onPressed: registerButtonPressed,
+              onPressed: loginButtonPressed,
             ),
             SizedBox(height: 16),
             Text(

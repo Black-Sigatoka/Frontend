@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
+import 'package:black_sigatoka/screens/Diagnosis.dart';
 import 'package:flutter/material.dart';
 import 'package:black_sigatoka/screens/register_page.dart';
 import 'package:black_sigatoka/screens/login_page.dart';
@@ -19,7 +20,7 @@ class CustomButton extends StatelessWidget {
         ),
         backgroundColor: Color.fromARGB(255, 127, 181, 230)
       ),
-      onPressed: () => registerButtonPressed(context),
+      onPressed: () => loginButtonPressed(context),
       child: Container(
         padding: EdgeInsets.symmetric(
           horizontal: 95,
@@ -53,6 +54,16 @@ void registerButtonPressed(BuildContext context) {
     context,
     MaterialPageRoute(
       builder: (context) => LoginScreen()
+    )
+  );
+}
+
+void loginButtonPressed(BuildContext context) {
+  //logic for home button
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => Diagnosis()
     )
   );
 }

@@ -63,11 +63,10 @@ class _DiagnosisState extends State<Diagnosis> {
                 _showImagePicker(context);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.lightBlue, // Light blue color
+                backgroundColor: const Color.fromARGB(255, 127, 181, 230), 
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0), // Adjust border radius
+                  borderRadius: BorderRadius.circular(30),
                 ),
-                minimumSize: const Size(2, 35), // Adjust width and height
               ),
 
               child: const Row(
@@ -165,7 +164,7 @@ void _showRecommendations(BuildContext context) {
             child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const RecommendationScreen(diseaseSeverity: '',)));
+                        MaterialPageRoute(builder: (context) => const RecommendationScreen(diseaseSeverity: 'High',)));
                   },
               child: const Text("Recommendations"),
             ),
