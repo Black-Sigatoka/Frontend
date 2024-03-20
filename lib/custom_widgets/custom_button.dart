@@ -1,8 +1,9 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
+import 'package:black_sigatoka/screens/Diagnosis.dart';
 import 'package:flutter/material.dart';
 import 'package:black_sigatoka/screens/register_page.dart';
-import 'package:black_sigatoka/screens/login_page.dart';
+//import 'package:black_sigatoka/screens/login_page.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -52,7 +53,7 @@ void registerButtonPressed(BuildContext context) {
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => LoginScreen()
+      builder: (context) => Diagnosis()
     )
   );
 }

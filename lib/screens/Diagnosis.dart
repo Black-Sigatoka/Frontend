@@ -1,4 +1,5 @@
 import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
+import 'package:black_sigatoka/screens/recommendations_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -23,7 +24,7 @@ class _DiagnosisState extends State<Diagnosis> {
         _imageFile = File(pickedImage.path);
       });
     } else {
-      _imageFile=null;
+      _imageFile = null;
       print("No image selected");
     }
   }
@@ -37,38 +38,37 @@ class _DiagnosisState extends State<Diagnosis> {
         children: [
           const SizedBox(height: 10),
           Container(
-            padding: const EdgeInsets.only(top:10),
+            padding: const EdgeInsets.only(top: 10),
             height: 150,
-            width:200,
+            width: 200,
             color: Colors.grey[300], // Placeholder background color
             child: _imageFile != null
                 ? Image.file(
-              _imageFile!,
-              height: 150,
-              fit: BoxFit.cover,
-            )
+                    _imageFile!,
+                    height: 150,
+                    fit: BoxFit.cover,
+                  )
                 : Icon(
-              Icons.image,
-              size: 50,
-              color: Colors.grey[400], // Image icon color
-            ),
+                    Icons.image,
+                    size: 50,
+                    color: Colors.grey[400], // Image icon color
+                  ),
           ),
           const SizedBox(height: 16),
           Padding(
-            padding: const EdgeInsets.only(left:74.0,right:74.0),
+            padding: const EdgeInsets.only(left: 74.0, right: 74.0),
             child: ElevatedButton(
-
               onPressed: () {
                 _showImagePicker(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.lightBlue, // Light blue color
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0), // Adjust border radius
+                  borderRadius:
+                      BorderRadius.circular(12.0), // Adjust border radius
                 ),
                 minimumSize: const Size(2, 35), // Adjust width and height
               ),
-
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -83,24 +83,22 @@ class _DiagnosisState extends State<Diagnosis> {
           ),
           const SizedBox(height: 16),
           Padding(
-            padding: const EdgeInsets.only(left:74.0,right:74.0),
+            padding: const EdgeInsets.only(left: 74.0, right: 74.0),
             child: ElevatedButton(
-
               onPressed: () {
                 _showRecommendations(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.lightBlue, // Light blue color
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0), // Adjust border radius
+                  borderRadius:
+                      BorderRadius.circular(12.0), // Adjust border radius
                 ),
                 minimumSize: const Size(2, 35), // Adjust width and height
               ),
-
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
                   Padding(
                     padding: EdgeInsets.only(left: 8),
                     child: Text("Diagnose"),
@@ -145,25 +143,30 @@ class _DiagnosisState extends State<Diagnosis> {
     );
   }
 }
+
 void _showRecommendations(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-
         title: const Center(child: Text("Severity Level")),
-        content:   const Padding(
-          padding: EdgeInsets.only(left:90.0),
-          child: Text("High",style: TextStyle(
-              color: Colors.green
-          ),
+        content: const Padding(
+          padding: EdgeInsets.only(left: 90.0),
+          child: Text(
+            "High",
+            style: TextStyle(color: Colors.green),
           ),
         ),
         actions: [
           Center(
             child: ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RecommendationScreen(
+                              diseaseSeverity: '',
+                            )));
               },
               child: const Text("Recommendations"),
             ),
