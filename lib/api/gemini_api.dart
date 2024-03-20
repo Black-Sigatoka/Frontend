@@ -12,7 +12,7 @@ class GeminiAPI {
 
   //create an http request
   static Future<String> getGeminiData(String text) async {
-    String message = 'user message';
+    String message = 'Provide recommendations for black sigatoka disease based on the severity level';
 
     try {
       final header = await getHeader();
@@ -22,7 +22,7 @@ class GeminiAPI {
           {
             'parts': [
               {
-                'text': 'user message request here $message',
+                'text': message,
               }
             ]
           }

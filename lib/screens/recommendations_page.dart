@@ -5,19 +5,18 @@ import 'package:flutter/material.dart';
 //import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
 
-
 class RecommendationScreen extends StatefulWidget {
   final String diseaseSeverity;
 
-  const RecommendationScreen({Key? key, required this.diseaseSeverity}) : super(key: key);
+  const RecommendationScreen({Key? key, required this.diseaseSeverity})
+      : super(key: key);
 
   @override
   _RecommendationScreenState createState() => _RecommendationScreenState();
 }
 
 class _RecommendationScreenState extends State<RecommendationScreen> {
-
- //getRecommendations(String severity) async {
+  //getRecommendations(String severity) async {
 //     // Access your API key as an environment variable (see "Set up your API key" above)
 //   final apiKey = String.fromEnvironment('AIzaSyBUQOV99dTBg9b-_SMIAljliGyyeWx24Qg');
 
@@ -29,7 +28,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
 // }
 
 //   try {
-//     final response = await gemini.text( 
+//     final response = await gemini.text(
 //       prompt: "Provide recommendations for Black Sigatoka disease based on the severity level: $severity.",
 //       maxTokens: 100, // Adjust token limit as needed (higher for more details)
 //     );
@@ -39,7 +38,6 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
 //     return "An error occurred. Please try again later.";
 //   }
 // }
-
 
   @override
   Widget build(BuildContext context) {
@@ -61,15 +59,19 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
               'Black Sigatoka Severity: ${widget.diseaseSeverity}',
               style: const TextStyle(fontSize: 18.0),
             ),
+            Text(
+              result,
+              style: const TextStyle(fontSize: 16.0),
+            ),
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () async {
                 //String recommendation = await getRecommendations(widget.diseaseSeverity);
 
                 setState(() async {
-                  result = await GeminiAPI.getGeminiData(textController.text); 
+                  result = await GeminiAPI.getGeminiData(textController.text);
+                  //print(result);
                 });
-
 
                 showDialog(
                   context: context,
