@@ -1,6 +1,9 @@
-import 'package:black_sigatoka/screens/home_page.dart';
+//import 'package:black_sigatoka/screens/home_page.dart';
+import 'package:black_sigatoka/app_view.dart';
+import 'package:black_sigatoka/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:user_repository/user_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyApp extends StatelessWidget {
   final UserRepository userRepository;
@@ -9,12 +12,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        fontFamily: 'Poppins',
-      ),
-      home: const HomeScreen(),
+    return RepositoryProvider<AuthenticationBloc>(
+      create: (context) => AuthenticationBloc(userRepository: userRepository),
+      child: const MyAppView(),
     );
+
+
   }
 }
