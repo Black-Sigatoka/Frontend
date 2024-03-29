@@ -2,8 +2,9 @@
 
 import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
 import 'package:black_sigatoka/custom_widgets/custom_button.dart';
-import 'package:black_sigatoka/custom_widgets/custom_textformfield.dart';
-import 'package:black_sigatoka/screens/register_page.dart';
+import 'package:black_sigatoka/screens/auth/components/custom_textformfield.dart';
+import 'package:black_sigatoka/screens/auth/register_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:black_sigatoka/utils/login/login_bloc.dart';
@@ -18,10 +19,16 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final String buttonText = 'Login';
 
+  final passwordController = TextEditingController();
+  final emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  bool signInRequired = false;
+  IconData iconPassword = CupertinoIcons.eye_fill;
+  bool obscurePassword = true;
+  String? _errorMsg;
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       //backgroundColor: Color.fromRGBO(217, 217, 217, 100),
       appBar: PreferredSize(
@@ -44,10 +51,69 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             SizedBox(height: 20),
+            Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: CustomTextFormField(
+                          controller: emailController,
+                          hintText: 'Enter your email',
+                          obscureText: false,
+                          keyboardType: TextInputType.emailAddress,
+                          prefixIcon: const Icon(CupertinoIcons.mail_solid),
+                          errorMsg: _errorMsg,
+                          validator: (val) {
+                            if (val!.isEmpty) {
+                              return 'Please fill in this field';
+                            } else if (!RegExp(
+                                    r'^[\w-\.]+@([\w-]+.)+[\w-]{2,4}$')
+                                .hasMatch(val)) {
+                              return 'Please enter a valid email';
+                            }
+                            return null;
+                          }),
+                    ),
+                    SizedBox(height: 16),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: CustomTextFormField(
+                        controller: passwordController,
+                        hintText: 'Enter your password',
+                        obscureText: obscurePassword,
+                        keyboardType: TextInputType.visiblePassword,
+                        prefixIcon: const Icon(CupertinoIcons.lock_fill),
+                        errorMsg: _errorMsg,
+                        validator: (val) {
+                          if (val!.isEmpty) {
+                            return 'Please fill in this field';
+                          } else if (!RegExp(
+                                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~`])\%\-(_+=:;,.<>/?"[{\]}\|^]).{8,}$')
+                              .hasMatch(val)) {
+                            return 'Please enter a valid password';
+                          }
+                          return null;
+                        },
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              obscurePassword = !obscurePassword;
+                              if (obscurePassword) {
+                                iconPassword = CupertinoIcons.eye_fill;
+                              } else {
+                                iconPassword = CupertinoIcons.eye_slash_fill;
+                              }
+                            });
+                          },
+                          icon: Icon(iconPassword),
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
             CustomTextFormField(
-              label: 'Enter your email',
-              onChanged: (value) {}
-            ),
+                label: 'Enter your email', onChanged: (value) {}),
             SizedBox(height: 16),
             CustomTextFormField(
               label: 'Enter your password',
@@ -57,8 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: 16),
             CustomButton(
               text: buttonText,
-              onPressed: () {
-              },
+              onPressed: () {},
             ),
             SizedBox(height: 16),
             Text(
