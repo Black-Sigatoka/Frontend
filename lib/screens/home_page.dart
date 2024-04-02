@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 30),
             const CustomButton(
-              onPressed: homeButtonPressed,
+              onPressed: registerButtonPressed,
               text: 'Get Started',
             ),
           ],

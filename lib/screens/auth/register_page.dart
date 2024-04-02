@@ -62,43 +62,6 @@ class RegisterScreen extends StatelessWidget {
               onPressed: loginButtonPressed,
             ),
             SizedBox(height: 16),
-            Text(
-              'Or',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  backgroundColor: Colors.white),
-              onPressed: () => homeButtonPressed(context),
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 45,
-                  vertical: 15,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/icons/google_icon.png',
-                      height: 25,
-                      width: 25,
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      'Continue with Google',
-                      style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.black,
-                          fontWeight: FontWeight.normal),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
