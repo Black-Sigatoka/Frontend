@@ -12,11 +12,11 @@ import 'package:flutter/foundation.dart'
 /// ```dart
 /// import 'firebase_options.dart';
 /// // ...
- await Firebase.initializeApp(
+ //await Firebase.initializeApp(
    // ignore: deprecated_colon_for_default_value
   // Remove the options parameter since it is not required
   // options: DefaultFirebaseOptions.currentPlatform,
- );
+ //);
 /// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {

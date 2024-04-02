@@ -2,8 +2,8 @@
 
 import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
 import 'package:black_sigatoka/custom_widgets/custom_button.dart';
-import 'package:black_sigatoka/custom_widgets/custom_textformfield.dart';
-import 'package:black_sigatoka/screens/login_page.dart';
+import 'package:black_sigatoka/screens/auth/components/custom_textformfield.dart';
+import 'package:black_sigatoka/screens/auth/login_page.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatelessWidget {
