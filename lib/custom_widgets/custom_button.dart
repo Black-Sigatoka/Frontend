@@ -2,8 +2,8 @@
 
 import 'package:black_sigatoka/screens/Diagnosis.dart';
 import 'package:flutter/material.dart';
-import 'package:black_sigatoka/screens/register_page.dart';
-import 'package:black_sigatoka/screens/login_page.dart';
+import 'package:black_sigatoka/screens/auth/register_page.dart';
+import 'package:black_sigatoka/screens/auth/login_page.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;

@@ -1,11 +1,15 @@
-// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:black_sigatoka/custom_widgets/custom_button.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,12 +19,12 @@ class HomeScreen extends StatelessWidget {
           children: [
             Image.asset(
               'assets/images/Logo.png',
-              height: 150,         
+              height: 150,
             ),
             const SizedBox(height: 20),
             Text(
               'Sigatoka Mobile Application'.toUpperCase(),
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 18,
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.w600),
@@ -31,7 +35,7 @@ class HomeScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
-            CustomButton(
+            const CustomButton(
               onPressed: homeButtonPressed,
               text: 'Get Started',
             ),
@@ -41,3 +45,5 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+
