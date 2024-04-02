@@ -118,13 +118,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: MediaQuery.of(context).size.width * 0.5,
                           child: ElevatedButton(
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                context.read<SignInBloc>().add(SignInRequired(
-                                  emailController.text,
-                                  passwordController.text
-                                  )
-                                );
-                              }
+                              // if (_formKey.currentState!.validate()) {
+                              //   context.read<SignInBloc>().add(SignInRequired(
+                              //     emailController.text,
+                              //     passwordController.text
+                              //     )
+                              //   );
+                              // }
                             },
                             style:ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(

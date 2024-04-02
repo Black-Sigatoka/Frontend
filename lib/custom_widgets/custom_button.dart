@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
+//import 'package:black_sigatoka/screens/Diagnosis_page.dart';
 import 'package:black_sigatoka/screens/Diagnosis_page.dart';
 import 'package:flutter/material.dart';
 import 'package:black_sigatoka/screens/auth/register_page.dart';
@@ -63,7 +64,7 @@ void loginButtonPressed(BuildContext context) {
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => Diagnosis()
+      builder: (context) => DiagnosisScreen()
     )
   );
 }

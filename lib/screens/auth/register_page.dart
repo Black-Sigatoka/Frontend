@@ -2,7 +2,7 @@
 
 import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
 import 'package:black_sigatoka/custom_widgets/custom_button.dart';
-import 'package:black_sigatoka/screens/auth/components/custom_textformfield.dart';
+//import 'package:black_sigatoka/screens/auth/components/custom_textformfield.dart';
 import 'package:black_sigatoka/screens/auth/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -35,27 +35,27 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            CustomTextFormField(
-              label: 'Enter your full name',
-              onChanged: (value) {
-                //handles changes to the text form field
-              },
-            ),
+            // CustomTextFormField(
+            //   label: 'Enter your full name',
+            //   onChanged: (value) {
+            //     //handles changes to the text form field
+            //   },
+            // ),
             SizedBox(height: 16),
-            CustomTextFormField(
-              label: 'Enter your email',
-              onChanged: (value) {},
-            ),
-            SizedBox(height: 16),
-            CustomTextFormField(
-              label: 'Enter your passsword',
-              onChanged: (value) {},
-            ),
-            SizedBox(height: 16),
-            CustomTextFormField(
-              label: 'Confirm Password',
-              onChanged: (value) {},
-            ),
+            // CustomTextFormField(
+            //   label: 'Enter your email',
+            //   onChanged: (value) {},
+            // ),
+            // SizedBox(height: 16),
+            // CustomTextFormField(
+            //   label: 'Enter your passsword',
+            //   onChanged: (value) {},
+            // ),
+            // SizedBox(height: 16),
+            // CustomTextFormField(
+            //   label: 'Confirm Password',
+            //   onChanged: (value) {},
+            // ),
             SizedBox(height: 16),
             CustomButton(
               text: buttonText,
