@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-class Diagnosis extends StatefulWidget {
-  const Diagnosis({super.key});
+class DiagnosisScreen extends StatefulWidget {
+  const DiagnosisScreen({super.key});
 
   @override
-  State<Diagnosis> createState() => _DiagnosisState();
+  State<DiagnosisScreen> createState() => _DiagnosisScreenState();
 }
 
-class _DiagnosisState extends State<Diagnosis> {
+class _DiagnosisScreenState extends State<DiagnosisScreen> {
   File? _imageFile;
 
   Future<void> _pickImage(ImageSource source) async {
