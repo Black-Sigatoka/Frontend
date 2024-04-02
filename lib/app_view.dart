@@ -23,6 +23,6 @@ class MyAppView extends StatelessWidget {
           }
         },
       ),
-    );
+     );
   }
 }

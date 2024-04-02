@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
 // ignore: non_constant_identifier_names, non_constant_identifier_names, non_constant_identifier_names, non_constant_identifier_names
-/// Default [FirebaseOptions] for use with your Firebase apps.
+// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:
 /// ```dart

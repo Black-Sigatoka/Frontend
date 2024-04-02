@@ -33,10 +33,10 @@ flutter:
   #  - assets/icons/
 
 
-  fonts:
-    - family: Poppins
-      fonts:
-        - asset: fonts/Poppins/Poppins-Regular.ttf
-        - asset: fonts/Poppins/Poppins-SemiBold.ttf
-        - asset: fonts/Poppins/Poppins-Medium.ttf
-        - asset: fonts/Poppins/Poppins-Bold.ttf
+  # fonts:
+  #   - family: Poppins
+  #     fonts:
+  #       - asset: fonts/Poppins/Poppins-Regular.ttf
+  #       - asset: fonts/Poppins/Poppins-SemiBold.ttf
+  #       - asset: fonts/Poppins/Poppins-Medium.ttf
+  #       - asset: fonts/Poppins/Poppins-Bold.ttf

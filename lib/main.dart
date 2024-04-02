@@ -1,4 +1,5 @@
 import 'package:black_sigatoka/app.dart';
+import 'package:black_sigatoka/firebase_options.dart';
 import 'package:black_sigatoka/simple_bloc_observer.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,7 +9,9 @@ import 'package:user_repository/user_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   Bloc.observer = SimpleBlocObserver();
   runApp(MyApp(FirebaseUserRepo()));
 }

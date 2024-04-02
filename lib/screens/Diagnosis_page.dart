@@ -3,6 +3,7 @@ import 'package:black_sigatoka/screens/recommendations_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'dart:developer';
 
 class DiagnosisScreen extends StatefulWidget {
   const DiagnosisScreen({super.key});
@@ -19,13 +20,13 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     final pickedImage = await picker.pickImage(source: source);
 
     if (pickedImage != null) {
-      print("Image picked: $pickedImage");
+      log("Image picked: $pickedImage");
       setState(() {
         _imageFile = File(pickedImage.path);
       });
     } else {
       _imageFile=null;
-      print("No image selected");
+      log("No image selected");
     }
   }
 
