@@ -52,11 +52,16 @@ class FirebaseUserRepo implements UserRepository {
   Future<void> setUserData(MyUser myUser) async {
     try {
       await usersCollection
-        .doc(myUser.userId)
-        .set(myUser.toEntity().toDocument());
+          .doc(myUser.userId)
+          .set(myUser.toEntity().toDocument());
     } catch (error) {
       dev.log(error.toString());
       rethrow;
     }
+  }
+
+  @override
+  Future<void> logOut() async {
+    await _firebaseAuth.signOut();
   }
 }

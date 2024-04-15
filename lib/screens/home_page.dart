@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:black_sigatoka/custom_widgets/custom_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -35,15 +33,28 @@ class _HomeScreenState extends State<HomeScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
-            const CustomButton(
-              onPressed: registerButtonPressed,
-              text: 'Get Started',
-            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  backgroundColor: const Color.fromARGB(255, 127, 181, 230)),
+              onPressed: (){},
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 95, vertical: 15),
+                child: const Text(
+                  'Get Started',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
     );
   }
 }
-
-
