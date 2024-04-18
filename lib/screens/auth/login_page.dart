@@ -2,7 +2,7 @@
 
 import 'package:black_sigatoka/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
-import 'package:black_sigatoka/screens/Diagnosis_page.dart';
+import 'package:black_sigatoka/screens/diagnosis_page.dart';
 import 'package:black_sigatoka/screens/auth/components/custom_textformfield.dart';
 import 'package:black_sigatoka/screens/auth/register_page.dart';
 import 'package:flutter/cupertino.dart';

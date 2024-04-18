@@ -1,6 +1,6 @@
-import 'package:black_sigatoka/blocs/sign_in_bloc/sign_in_bloc.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -39,14 +39,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
       ),
-      actions: [
-        IconButton(
-            onPressed: () {
-              context.read<SignInBloc>().add(const SignOutRequired());
-            },
-            icon: const Icon(Icons.logout)
-          )
-      ],
     );
   }
 }

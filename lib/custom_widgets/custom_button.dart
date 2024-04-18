@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
 //import 'package:black_sigatoka/screens/Diagnosis_page.dart';
-import 'package:black_sigatoka/screens/Diagnosis_page.dart';
+import 'package:black_sigatoka/screens/diagnosis_page.dart';
 import 'package:flutter/material.dart';
 import 'package:black_sigatoka/screens/auth/register_page.dart';
 import 'package:black_sigatoka/screens/auth/login_page.dart';
