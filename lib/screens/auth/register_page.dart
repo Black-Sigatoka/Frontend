@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:black_sigatoka/blocs/sign_up_bloc/sign_up_bloc.dart';
 import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
 import 'package:black_sigatoka/screens/auth/components/custom_textformfield.dart';
@@ -294,12 +296,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             )
                           : const CircularProgressIndicator()
                     ],
-                  ))
-            ],
+                  )),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                Text(
+                  "Don't have an account?",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RegisterScreen()));
+                  },
+                  child: Text(
+                    'Sign up',
+                    style: TextStyle(color: Color.fromARGB(255, 127, 181, 230)),
+                  ),
+                ),
+              ],
+
           ),
-        ),
+        ],
       ),
-    );
+    )));
   }
 }
 
