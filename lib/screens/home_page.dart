@@ -1,3 +1,4 @@
+import 'package:black_sigatoka/screens/auth/login_page.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -39,7 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   backgroundColor: const Color.fromARGB(255, 127, 181, 230)),
-              onPressed: (){},
+              onPressed: (){
+                Navigator.push(context,  MaterialPageRoute(
+                  builder: (context) => const LoginScreen(),
+                ));
+              },
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 95, vertical: 15),
