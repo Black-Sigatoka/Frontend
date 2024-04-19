@@ -79,3 +79,4 @@ class StoreData{
       print('Error sending inference request or parsing response: $error');
     }
   }
+}
