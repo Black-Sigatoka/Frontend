@@ -23,6 +23,8 @@ dependencies:
   google_generative_ai: ^0.2.2
   image_picker: ^1.0.7
   dotenv: ^4.2.0
+  firebase_storage: ^11.7.2
+  cloud_firestore: ^4.17.0
 
 dev_dependencies:
   flutter_test:

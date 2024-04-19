@@ -1,13 +1,13 @@
+import 'dart:typed_data';
 
-
-import 'dart:developer';
-import 'dart:io';
-
-import 'package:black_sigatoka/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
 import 'package:black_sigatoka/screens/recommendations_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'dart:developer';
+import 'package:black_sigatoka/Data/Models/add_data.dart';
+
 
 class DiagnosisScreen extends StatefulWidget {
   const DiagnosisScreen({super.key});
@@ -34,45 +34,33 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     }
   }
 
+  Uint8List imageFileToUint8List(File imagefile) {
+    // Read the file as bytes
+    List<int> bytes = imagefile.readAsBytesSync();
+
+    // Convert bytes to Uint8List
+    Uint8List uint8Listfile = Uint8List.fromList(bytes);
+
+    return uint8Listfile;
+  }
+
+  void saveIMage(File imageFile) async{
+    final image =imageFileToUint8List(imageFile);
+
+    //sending image to firestore and retrieving url
+    String imageUrl = await StoreData().uploadImageToStorage("image ", image);
+    print("my download url:$imageUrl");
+
+    //sending url to online model
+   // final inferenceResults = await StoreData().sendInferenceRequest(imageUrl);
+    //print("my results: $inferenceResults");
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      backgroundColor: Colors.white,
-      title: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 30),
-        child: Row(
-          children: [
-            Center(
-              child: Image.asset(
-                'assets/images/Logo.png',
-                height: 30,
-                width: 30,
-              ),
-            ),
-            const SizedBox(width: 5),
-            Center(
-              child: Text(
-                'Diagnosis'.toUpperCase(),
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-            ),
-          ],
-        ),
-      ),
-      actions: [
-        IconButton(
-            onPressed: () {
-              context.read<SignInBloc>().add(const SignOutRequired());
-            },
-            icon: const Icon(Icons.logout)
-          )
-      ],
-    ),
+      appBar: const CustomAppBar(title: 'Diagnosis'),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -127,7 +115,14 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
             child: ElevatedButton(
 
               onPressed: () {
-                _showRecommendations(context);
+                if(_imageFile != null){
+                  saveIMage(_imageFile!);
+                }else{
+                  print("image file is empty");
+                }
+
+
+                //_showRecommendations(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.lightBlue, // Light blue color
