@@ -1,8 +1,10 @@
-import 'dart:typed_data';
+// ignore_for_file: file_names
 
-import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
+import 'dart:typed_data';
+import 'package:black_sigatoka/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:black_sigatoka/screens/recommendations_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'dart:developer';
@@ -60,7 +62,42 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Diagnosis'),
+      appBar:AppBar(
+      backgroundColor: Colors.white,
+      title: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 30),
+        child: Row(
+          children: [
+            Center(
+              child: Image.asset(
+                'assets/images/Logo.png',
+                height: 30,
+                width: 30,
+              ),
+            ),
+            const SizedBox(width: 5),
+            Center(
+              child: Text(
+                'Diagnosis'.toUpperCase(),
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        IconButton(
+            onPressed: () {
+              context.read<SignInBloc>().add(const SignOutRequired());
+            },
+            icon: const Icon(Icons.logout)
+          )
+      ],
+    ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
