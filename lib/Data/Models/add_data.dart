@@ -9,52 +9,41 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 final FirebaseStorage _storage = FirebaseStorage.instance;
-final FirebaseFirestore  _firestore =FirebaseFirestore.instance;
-class StoreData{
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> uploadImageToStorage(String filename, Uint8List imageFile) async{
-    Reference ref =_storage.ref().child("sigatoka_images/$filename");
+class StoreData {
+  Future<String> uploadImageToStorage(
+      String filename, Uint8List imageFile) async {
+    Reference ref = _storage.ref().child("sigatoka_images/$filename");
     UploadTask uploadTask = ref.putData(imageFile);
 
-    TaskSnapshot taskSnapshot =await uploadTask;
+    TaskSnapshot taskSnapshot = await uploadTask;
 
-   String downloadurl= await taskSnapshot.ref.getDownloadURL();
+    String downloadurl = await taskSnapshot.ref.getDownloadURL();
 
-   return downloadurl;
-
-
+    return downloadurl;
   }
 
-  Future<String> saveData({
-    required String userId,
-    required String diagnosis,
-    required Uint8List file}) async{
-    String resp ="Some error occured";
-    try{
-     String imageUrl = await uploadImageToStorage("sigatokaImage",file);
-     await _firestore.collection("User Images").add(
-       {
-         'email':userId,
-         'imageLink':imageUrl,
-         'Diagnosis':diagnosis
-
-       }
-     );
-     resp="success";
-
-    }catch(err){
+  Future<String> saveData(
+      {required String userId,
+      required String diagnosis,
+      required Uint8List file}) async {
+    String resp = "Some error occured";
+    try {
+      String imageUrl = await uploadImageToStorage("sigatokaImage", file);
+      await _firestore.collection("User Images").add(
+          {'email': userId, 'imageLink': imageUrl, 'Diagnosis': diagnosis});
+      resp = "success";
+    } catch (err) {
       resp = err.toString();
-
     }
     return resp;
-
-
-
   }
 
   // Function to send inference request
   Future<dynamic> sendInferenceRequest(String imageUrl) async {
-    final endpointUrl = "https://yolo-endpoint.westus.inference.ml.azure.com/score";
+    final endpointUrl =
+        "https://yolo-endpoint.westus.inference.ml.azure.com/score";
     final apiKey = ""; // Replace with your API key
 
     final headers = {
@@ -67,11 +56,11 @@ class StoreData{
     };
 
     try {
-      final response = await http.post(Uri.parse(endpointUrl), headers: headers, body: jsonEncode(requestData));
+      final response = await http.post(Uri.parse(endpointUrl),
+          headers: headers, body: jsonEncode(requestData));
       if (response.statusCode == 200) {
         final parsedData = jsonDecode(response.body);
         return parsedData;
-
       } else {
         print('Error sending inference request: ${response.statusCode}');
       }
