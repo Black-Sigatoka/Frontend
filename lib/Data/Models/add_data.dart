@@ -42,7 +42,7 @@ class StoreData {
   Future<dynamic> sendInferenceRequest(String imageUrl) async {
     final endpointUrl =
         "https://yolo-endpoint.westus.inference.ml.azure.com/score";
-    final apiKey = ""; // Replace with your API key
+    final apiKey = "bUMNjKX2y9WIJZFWwjvjpH4jslaaUmVg"; // Replace with your API key
 
     final headers = {
       'Content-Type': 'application/json',
@@ -58,6 +58,7 @@ class StoreData {
           headers: headers, body: jsonEncode(requestData));
       if (response.statusCode == 200) {
         final parsedData = jsonDecode(response.body);
+        print("my type ${parsedData.runtimeType}");
         return parsedData;
       } else {
         print('Error sending inference request: ${response.statusCode}');

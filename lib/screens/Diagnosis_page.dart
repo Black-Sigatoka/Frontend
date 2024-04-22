@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:black_sigatoka/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:black_sigatoka/screens/recommendations_page.dart';
@@ -9,6 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'dart:developer';
 import 'package:black_sigatoka/Data/Models/add_data.dart';
+import 'package:uuid/uuid.dart';
+
 
 
 class DiagnosisScreen extends StatefulWidget {
@@ -46,16 +49,60 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     return uint8Listfile;
   }
 
+
+
+  String getSeverityLevelCategories(String jsonString) {
+    // Parse the JSON string into a Dart object
+    List<dynamic> inferenceResults = json.decode(jsonString);
+
+    // Check if inferenceResults is a list and not null
+    if (inferenceResults != null && inferenceResults is List) {
+      // Initialize an empty string to store the concatenated severity level categories
+      String severityLevelCategories = '';
+
+      // Iterate through each result and concatenate the severity level category to the string
+      for (var result in inferenceResults) {
+        // Ensure "Severity Level Category" is not null and is a string
+        if (result["Severity Level Category"] != null &&
+            result["Severity Level Category"] is String) {
+          // Concatenate the severity level category with a comma and space
+          severityLevelCategories +=
+          '${result["Severity Level Category"]}, ';
+        }
+      }
+
+      // Remove the trailing comma and space
+      severityLevelCategories = severityLevelCategories.isNotEmpty
+          ? severityLevelCategories.substring(0, severityLevelCategories.length - 2)
+          : '';
+
+      // Return the concatenated severity level categories string
+      return severityLevelCategories;
+    } else {
+      // Return an empty string if inferenceResults is null or not a list
+      return '';
+    }
+  }
+
+
+
+
+
   void saveIMage(File imageFile) async{
     final image =imageFileToUint8List(imageFile);
 
     //sending image to firestore and retrieving url
-    String imageUrl = await StoreData().uploadImageToStorage("image ", image);
+    String imageUrl = await StoreData().uploadImageToStorage("${Uuid().v1()}", image);
     print("my download url:$imageUrl");
 
     //sending url to online model
-   // final inferenceResults = await StoreData().sendInferenceRequest(imageUrl);
-    //print("my results: $inferenceResults");
+   final inferenceResults = await StoreData().sendInferenceRequest(imageUrl);
+
+
+      final severity= getSeverityLevelCategories( inferenceResults);
+      print(severity);
+      _showRecommendations(context,severity);
+
 
   }
 
@@ -65,7 +112,7 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
       appBar:AppBar(
       backgroundColor: Colors.white,
       title: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
         child: Row(
           children: [
             Center(
@@ -217,16 +264,16 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     );
   }
 }
-void _showRecommendations(BuildContext context) {
+void _showRecommendations(BuildContext context,String severity) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
 
         title: const Center(child: Text("Severity Level")),
-        content:   const Padding(
+        content:    Padding(
           padding: EdgeInsets.only(left:90.0),
-          child: Text("High",style: TextStyle(
+          child: Text(severity,style: TextStyle(
               color: Colors.green
           ),
           ),
@@ -236,7 +283,7 @@ void _showRecommendations(BuildContext context) {
             child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const RecommendationScreen(diseaseSeverity: 'High',)));
+                        MaterialPageRoute(builder: (context) =>  RecommendationScreen(diseaseSeverity: severity,)));
                   },
               child: const Text("Recommendations"),
             ),
