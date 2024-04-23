@@ -47,6 +47,7 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     Uint8List uint8Listfile = Uint8List.fromList(bytes);
 
     return uint8Listfile;
+
   }
 
 
@@ -82,6 +83,7 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
       // Return an empty string if inferenceResults is null or not a list
       return '';
     }
+    
   }
 
 
