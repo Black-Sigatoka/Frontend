@@ -1,33 +1,27 @@
-// ignore: duplicate_ignore
-// ignore: library_private_types_in_public_api, //prefer_const_constructors
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api
-
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
-//import 'package:dotenv/dotenv.dart' as dotenv;
 
 class RecommendationScreen extends StatefulWidget {
-  final String diseaseSeverity;
+ final String diseaseSeverity;
 
-  const RecommendationScreen({Key? key, required this.diseaseSeverity})
+ const RecommendationScreen({Key? key, required this.diseaseSeverity})
       : super(key: key);
 
-  @override
-  _RecommendationScreenState createState() => _RecommendationScreenState();
+ @override
+ State<RecommendationScreen> createState() => _RecommendationScreenState();
 }
 
 class _RecommendationScreenState extends State<RecommendationScreen> {
-  Future<String?> getRecommendations(String severity) async {
+ Future<String?> getRecommendations(String severity) async {
     try {
-
       final apiKey = Platform.environment['API_KEY'];
 
       if (apiKey == null) {
-        print('No \$API_KEY environment variable');
-        exit(1);
+        throw Exception('API_KEY environment variable not found');
       }
 
       final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
@@ -38,13 +32,13 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
       final response = await model.generateContent(content);
       return response.text;
     } catch (error) {
-      print(error); // Log the error for debugging
+      log(error.toString()); // Log the error for debugging
       return "An error occurred while fetching recommendations.";
     }
-  }
+ }
 
-  @override
-  Widget build(BuildContext context) {
+ @override
+ Widget build(BuildContext context) {
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight), // Adjust size as needed
@@ -64,8 +58,8 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
             ElevatedButton(
               onPressed: () async {
                 showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
+                 context: context,
+                 builder: (BuildContext context) {
                     return const AlertDialog(
                       title: Text('Fetching Recommendations...'),
                       content: Row(
@@ -76,25 +70,37 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
                         ],
                       ),
                     );
-                  },
+                 },
                 );
 
                 String? recommendation =
                     await getRecommendations(widget.diseaseSeverity);
                 Navigator.pop(context); // Close the initial progress dialog
 
-                List<String> recommendations = recommendation!.split('.');
-                String firstRecommendation = recommendations.first.trim();
+                if (recommendation != null) {
+                 List<String> recommendations = recommendation.split('.');
+                 String firstRecommendation = recommendations.first.trim();
 
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('AI Chatbot Recommendations'),
-                      content: Text(firstRecommendation),
-                    );
-                  },
-                );
+                 showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('AI Chatbot Recommendations'),
+                        content: Text(firstRecommendation),
+                      );
+                    },
+                 );
+                } else {
+                 showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Error'),
+                        content: const Text('Failed to fetch recommendations.'),
+                      );
+                    },
+                 );
+                }
               },
               child: const Text('Get Recommendations'),
             ),
@@ -102,5 +108,5 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
         ),
       ),
     );
-  }
+ }
 }

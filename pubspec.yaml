@@ -27,6 +27,7 @@ dependencies:
   cloud_firestore: ^4.17.0
   http: ^1.2.1
   uuid: ^4.4.0
+  logging: ^1.0.1
 
 dev_dependencies:
   flutter_test:
