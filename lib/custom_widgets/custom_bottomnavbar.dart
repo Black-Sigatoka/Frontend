@@ -18,16 +18,12 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       onTap: widget.onTap,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
+          icon: Icon(Icons.health_and_safety),
+          label: 'Diagnosis',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.business),
-          label: 'Business',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.school),
-          label: 'School',
+          icon: Icon(Icons.recommend),
+          label: 'Recommendations',
         ),
       ],
     );

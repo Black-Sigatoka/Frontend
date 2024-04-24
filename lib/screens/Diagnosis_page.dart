@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, prefer_const_constructors_in_immutables, prefer_const_constructors
 
 import 'dart:convert';
 import 'dart:typed_data';
@@ -12,9 +12,10 @@ import 'dart:io';
 import 'dart:developer';
 import 'package:black_sigatoka/Data/Models/add_data.dart';
 import 'package:uuid/uuid.dart';
+import 'package:black_sigatoka/utils/recommendation_utils.dart';
 
 class DiagnosisScreen extends StatefulWidget {
-  const DiagnosisScreen({super.key});
+  DiagnosisScreen({super.key});
 
   @override
   State<DiagnosisScreen> createState() => _DiagnosisScreenState();
@@ -22,11 +23,18 @@ class DiagnosisScreen extends StatefulWidget {
 
 class _DiagnosisScreenState extends State<DiagnosisScreen> {
   File? _imageFile;
+
   int _currentIndex = 0;
+  final PageController _pageController = PageController();
 
   void _onItemTapped(int index) {
     setState(() {
       _currentIndex = index;
+      _pageController.animateToPage(
+        index,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
     });
     //implement navigation logic here
   }
@@ -102,7 +110,7 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
 
     final severity = getSeverityLevelCategories(inferenceResults);
     print(severity);
-    _showRecommendations(context, severity);
+    showRecommendations(context, severity);
   }
 
   @override
@@ -143,84 +151,90 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
               icon: const Icon(Icons.logout))
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(height: 10),
-          Container(
-            padding: const EdgeInsets.only(top: 10),
-            height: 150,
-            width: 200,
-            color: Colors.grey[300], // Placeholder background color
-            child: _imageFile != null
-                ? Image.file(
-                    _imageFile!,
-                    height: 150,
-                    fit: BoxFit.cover,
-                  )
-                : Icon(
-                    Icons.image,
-                    size: 50,
-                    color: Colors.grey[400], // Image icon color
+      body: PageView(
+        controller: _pageController,
+        children: <Widget>[
+          Column(
+            children: [
+              const SizedBox(height: 150),
+              Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.only(top: 10),
+                height: 150,
+                width: 200,
+                color: Colors.grey[300], // Placeholder background color
+                child: _imageFile != null
+                    ? Image.file(
+                        _imageFile!,
+                        height: 150,
+                        fit: BoxFit.cover,
+                      )
+                    : Icon(
+                        Icons.image,
+                        size: 50,
+                        color: Colors.grey[400], // Image icon color
+                      ),
+              ),
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.only(left: 74.0, right: 74.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    _showImagePicker(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 127, 181, 230),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
-          ),
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.only(left: 74.0, right: 74.0),
-            child: ElevatedButton(
-              onPressed: () {
-                _showImagePicker(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 127, 181, 230),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.photo_camera_back),
+                      Padding(
+                        padding: EdgeInsets.only(left: 8),
+                        child: Text("Scan"),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.photo_camera_back),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Text("Scan"),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.only(left: 74.0, right: 74.0),
-            child: ElevatedButton(
-              onPressed: () {
-                if (_imageFile != null) {
-                  saveIMage(_imageFile!);
-                } else {
-                  print("image file is empty");
-                }
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.only(left: 74.0, right: 74.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_imageFile != null) {
+                      saveIMage(_imageFile!);
+                    } else {
+                      log("image file is empty");
+                    }
 
-                //_showRecommendations(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.lightBlue, // Light blue color
-                shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(12.0), // Adjust border radius
-                ),
-                minimumSize: const Size(2, 35), // Adjust width and height
-              ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Text("Diagnose"),
+                    //_showRecommendations(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightBlue, // Light blue color
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(12.0), // Adjust border radius
+                    ),
+                    minimumSize: const Size(2, 35), // Adjust width and height
                   ),
-                ],
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 8),
+                        child: Text("Diagnose"),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
+          RecommendationScreen(diseaseSeverity: 'severity'),
         ],
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
@@ -260,37 +274,4 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
       },
     );
   }
-}
-
-void _showRecommendations(BuildContext context, String severity) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Center(child: Text("Severity Level")),
-        content: Padding(
-          padding: EdgeInsets.only(left: 90.0),
-          child: Text(
-            severity,
-            style: TextStyle(color: Colors.green),
-          ),
-        ),
-        actions: [
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RecommendationScreen(
-                              diseaseSeverity: severity,
-                            )));
-              },
-              child: const Text("Recommendations"),
-            ),
-          ),
-        ],
-      );
-    },
-  );
 }

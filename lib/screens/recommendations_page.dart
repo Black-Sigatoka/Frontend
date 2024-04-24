@@ -1,24 +1,31 @@
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
+import 'package:black_sigatoka/utils/recommendation_utils.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as dotenv;
 
 class RecommendationScreen extends StatefulWidget {
- final String diseaseSeverity;
+  final String diseaseSeverity;
 
- const RecommendationScreen({Key? key, required this.diseaseSeverity})
+
+  const RecommendationScreen({Key? key, required this.diseaseSeverity})
       : super(key: key);
 
- @override
- State<RecommendationScreen> createState() => _RecommendationScreenState();
+  @override
+  State<RecommendationScreen> createState() => _RecommendationScreenState();
 }
 
 class _RecommendationScreenState extends State<RecommendationScreen> {
- Future<String?> getRecommendations(String severity) async {
+  Future<String?> getRecommendations(String severity) async {
+    showRecommendations(context, severity);
+
     try {
-      final apiKey = Platform.environment['API_KEY'];
+      var env = dotenv.DotEnv();
+      await env.load();
+      String apiKey = env.env['AIzaSyBMtpXp1vj-mH_p0649-qU49NHqwnAl6QQ']!;
 
       if (apiKey == null) {
         throw Exception('API_KEY environment variable not found');
@@ -35,17 +42,11 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
       log(error.toString()); // Log the error for debugging
       return "An error occurred while fetching recommendations.";
     }
- }
+  }
 
- @override
- Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight), // Adjust size as needed
-        child: CustomAppBar(
-          title: 'Recom',
-        ),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -58,8 +59,8 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
             ElevatedButton(
               onPressed: () async {
                 showDialog(
-                 context: context,
-                 builder: (BuildContext context) {
+                  context: context,
+                  builder: (BuildContext context) {
                     return const AlertDialog(
                       title: Text('Fetching Recommendations...'),
                       content: Row(
@@ -70,7 +71,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
                         ],
                       ),
                     );
-                 },
+                  },
                 );
 
                 String? recommendation =
@@ -78,10 +79,10 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
                 Navigator.pop(context); // Close the initial progress dialog
 
                 if (recommendation != null) {
-                 List<String> recommendations = recommendation.split('.');
-                 String firstRecommendation = recommendations.first.trim();
+                  List<String> recommendations = recommendation.split('.');
+                  String firstRecommendation = recommendations.first.trim();
 
-                 showDialog(
+                  showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
@@ -89,9 +90,9 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
                         content: Text(firstRecommendation),
                       );
                     },
-                 );
+                  );
                 } else {
-                 showDialog(
+                  showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
@@ -99,7 +100,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
                         content: const Text('Failed to fetch recommendations.'),
                       );
                     },
-                 );
+                  );
                 }
               },
               child: const Text('Get Recommendations'),
@@ -108,5 +109,5 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
         ),
       ),
     );
- }
+  }
 }

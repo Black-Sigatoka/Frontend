@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
         if (state.status == AuthenticationStatus.authenticated) {
-          return const DiagnosisScreen();
+          return DiagnosisScreen();
         } else {
           return Scaffold(
             body: Center(
