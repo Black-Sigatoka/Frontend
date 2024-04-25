@@ -1,15 +1,15 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:black_sigatoka/utils/recommendation_utils.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart' as dotenv;
+// import 'package:black_sigatoka/utils/recommendation_utils.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class RecommendationScreen extends StatefulWidget {
   final String diseaseSeverity;
-
 
   const RecommendationScreen({Key? key, required this.diseaseSeverity})
       : super(key: key);
@@ -20,21 +20,21 @@ class RecommendationScreen extends StatefulWidget {
 
 class _RecommendationScreenState extends State<RecommendationScreen> {
   Future<String?> getRecommendations(String severity) async {
-    showRecommendations(context, severity);
+    //showRecommendations(context, severity);
 
     try {
-      var env = dotenv.DotEnv();
-      await env.load();
-      String apiKey = env.env['AIzaSyBMtpXp1vj-mH_p0649-qU49NHqwnAl6QQ']!;
+      
+      const apiKey = 'AIzaSyBMtpXp1vj-mH_p0649-qU49NHqwnAl6QQ';
 
       if (apiKey == null) {
         throw Exception('API_KEY environment variable not found');
       }
 
-      final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
+      final model =
+          GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
       final content = [
         Content.text(
-            'Provide recommendations for Black Sigatoka disease based on the severity level:')
+            'Provide remedies for Black Sigatoka disease based on the $severity severity level')
       ];
       final response = await model.generateContent(content);
       return response.text;
