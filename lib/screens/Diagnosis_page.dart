@@ -64,39 +64,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     return uint8Listfile;
   }
 
-  String getSeverityLevelCategories(String jsonString) {
-    // Parse the JSON string into a Dart object
-    List<dynamic> inferenceResults = json.decode(jsonString);
-
-    // Check if inferenceResults is a list and not null
-    if (inferenceResults != null && inferenceResults is List) {
-      // Initialize an empty string to store the concatenated severity level categories
-      String severityLevelCategories = '';
-
-      // Iterate through each result and concatenate the severity level category to the string
-      for (var result in inferenceResults) {
-        // Ensure "Severity Level Category" is not null and is a string
-        if (result["Severity Level Category"] != null &&
-            result["Severity Level Category"] is String) {
-          // Concatenate the severity level category with a comma and space
-          severityLevelCategories += '${result["Severity Level Category"]}, ';
-        }
-      }
-
-      // Remove the trailing comma and space
-      severityLevelCategories = severityLevelCategories.isNotEmpty
-          ? severityLevelCategories.substring(
-              0, severityLevelCategories.length - 2)
-          : '';
-
-      // Return the concatenated severity level categories string
-      return severityLevelCategories;
-    } else {
-      // Return an empty string if inferenceResults is null or not a list
-      return '';
-    }
-  }
-
   void saveIMage(File imageFile) async {
     final image = imageFileToUint8List(imageFile);
 
@@ -108,9 +75,14 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     //sending url to online model
     final inferenceResults = await StoreData().sendInferenceRequest(imageUrl);
 
-    final severity = getSeverityLevelCategories(inferenceResults);
+    List<dynamic> inferenceResult = json.decode(inferenceResults);
+    final severity = inferenceResult[0]['Severity Level Category'];
+    final imagecopy = inferenceResult[0]['image_copy'];
+    // final severity= getSeverityLevelCategories( inferenceResults);
+    print(inferenceResult);
     print(severity);
-    showRecommendations(context, severity);
+    print(imagecopy.runtimeType);
+    showRecommendations(context, severity, imagecopy);
   }
 
   @override
