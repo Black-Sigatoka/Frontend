@@ -182,8 +182,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                     } else {
                       log("image file is empty");
                     }
-
-                    //_showRecommendations(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightBlue, // Light blue color
@@ -196,6 +194,7 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      CircularProgressIndicator(),
                       Padding(
                         padding: EdgeInsets.only(left: 8),
                         child: Text("Diagnose"),
