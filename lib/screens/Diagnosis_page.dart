@@ -22,6 +22,7 @@ class DiagnosisScreen extends StatefulWidget {
 }
 
 class _DiagnosisScreenState extends State<DiagnosisScreen> {
+  bool _isLoading = false;
   File? _imageFile;
 
   int _currentIndex = 0;
@@ -65,6 +66,10 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
   }
 
   void saveIMage(File imageFile) async {
+    setState(() {
+      _isLoading = true;
+    });
+
     final image = imageFileToUint8List(imageFile);
 
     //sending image to firestore and retrieving url
@@ -74,6 +79,10 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
 
     //sending url to online model
     final inferenceResults = await StoreData().sendInferenceRequest(imageUrl);
+
+    setState(() {
+      _isLoading = false;
+    });
 
     List<dynamic> inferenceResult = json.decode(inferenceResults);
     final severity = inferenceResult[0]['Severity Level Category'];
@@ -191,10 +200,13 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                     ),
                     minimumSize: const Size(2, 35), // Adjust width and height
                   ),
-                  child: const Row(
+                  child: _isLoading 
+                  ? CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  )
+                  : const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircularProgressIndicator(),
                       Padding(
                         padding: EdgeInsets.only(left: 8),
                         child: Text("Diagnose"),
