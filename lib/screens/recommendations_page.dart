@@ -61,7 +61,11 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
               ),
             ),
             const SizedBox(width: 5),
-            Center(
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 95,
+                vertical: 15
+              ),
               child: Text(
                 'Recommendations'.toUpperCase(),
                 textAlign: TextAlign.center,

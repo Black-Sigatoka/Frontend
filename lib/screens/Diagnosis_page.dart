@@ -6,6 +6,7 @@ import 'package:black_sigatoka/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:black_sigatoka/custom_widgets/custom_bottomnavbar.dart';
 import 'package:black_sigatoka/screens/recommendations_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -111,7 +112,11 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                 ),
               ),
               const SizedBox(width: 5),
-              Center(
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 95,
+                  vertical: 15
+                ),
                 child: Text(
                   'Diagnosis'.toUpperCase(),
                   textAlign: TextAlign.center,
