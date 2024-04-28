@@ -25,20 +25,20 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
   bool _isLoading = false;
   File? _imageFile;
 
-  int _currentIndex = 0;
+  // int _currentIndex = 0;
   final PageController _pageController = PageController();
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-      _pageController.animateToPage(
-        index,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    });
-    //implement navigation logic here
-  }
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _currentIndex = index;
+  //     _pageController.animateToPage(
+  //       index,
+  //       duration: Duration(milliseconds: 300),
+  //       curve: Curves.easeInOut,
+  //     );
+  //   });
+  //   //implement navigation logic here
+  // }
 
   Future<void> _pickImage(ImageSource source) async {
     final picker = ImagePicker();
@@ -193,12 +193,12 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lightBlue, // Light blue color
+                    backgroundColor: Colors.lightBlue, 
                     shape: RoundedRectangleBorder(
                       borderRadius:
-                          BorderRadius.circular(12.0), // Adjust border radius
+                          BorderRadius.circular(12.0),
                     ),
-                    minimumSize: const Size(2, 35), // Adjust width and height
+                    minimumSize: const Size(2, 35), 
                   ),
                   child: _isLoading 
                   ? CircularProgressIndicator(
@@ -217,13 +217,13 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
               ),
             ],
           ),
-          RecommendationScreen(diseaseSeverity: 'severity'),
+          // RecommendationScreen(diseaseSeverity: 'severity'),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onItemTapped,
-      ),
+      // bottomNavigationBar: CustomBottomNavigationBar(
+      //   currentIndex: _currentIndex,
+      //   onTap: _onItemTapped,
+      // ),
     );
   }
 
