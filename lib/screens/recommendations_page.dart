@@ -52,6 +52,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
       title: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 30),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Center(
               child: Image.asset(
@@ -61,11 +62,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
               ),
             ),
             const SizedBox(width: 5),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 95,
-                vertical: 15
-              ),
+            Center(
               child: Text(
                 'Recommendations'.toUpperCase(),
                 textAlign: TextAlign.center,
