@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'dart:developer';
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -64,7 +64,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
             const SizedBox(width: 5),
             Center(
               child: Text(
-                'Recommendations'.toUpperCase(),
+                'Recommend'.toUpperCase(),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                     fontSize: 18,
