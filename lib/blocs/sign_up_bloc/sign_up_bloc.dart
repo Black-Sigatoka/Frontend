@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:user_repository/user_repository.dart';
 
 part 'sign_up_event.dart';
@@ -16,9 +17,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       try {
         MyUser user = await _userRepository.signUp(event.user, event.password);
         await _userRepository.setUserData(user);
-        emit(SignUpSuccess());
+        emit(const SignUpSuccess(message: 'Sign up success!'));
+      } on FirebaseAuthException catch (e) {
+        emit(SignUpFailure(message: e.message ?? 'An unknown error occurred.'));
       } catch (e) {
-        emit(SignUpFailure());
+        emit(const SignUpFailure());
       }
     });
   }

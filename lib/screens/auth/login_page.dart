@@ -8,6 +8,7 @@ import 'package:black_sigatoka/screens/auth/register_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -34,15 +35,32 @@ class _LoginScreenState extends State<LoginScreen> {
             signInRequired = true;
           });
         } else if (state is SignInSuccess) {
-          // Navigate to the next screen
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => DiagnosisScreen()));
+          // Display a toast message for successful sign-in
+          Fluttertoast.showToast(
+              msg: state.message ??  "Signed in successfully!",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+              fontSize: 16.0
+            );
+              
+          // Navigate to the next screen with a slight delay
+          Future.delayed(Duration(seconds: 1), () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => DiagnosisScreen()));
+          });
           setState(() {
             signInRequired = false;
           });
         } else if (state is SignInFailure) {
-          // Display error message
-          return;
+          Fluttertoast.showToast(
+              msg: state.message ?? "An unexpected error occurred.",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
         }
       },
       child: Scaffold(
@@ -120,7 +138,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   if (obscurePassword) {
                                     iconPassword = CupertinoIcons.eye_fill;
                                   } else {
-                                    iconPassword = CupertinoIcons.eye_slash_fill;
+                                    iconPassword =
+                                        CupertinoIcons.eye_slash_fill;
                                   }
                                 });
                               },
@@ -167,8 +186,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Text(
                       "Don't have an account?",
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+                      style: TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.normal),
                     ),
                     TextButton(
                       onPressed: () {
@@ -179,8 +198,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       child: Text(
                         'Sign up',
-                        style:
-                            TextStyle(color: Color.fromARGB(255, 127, 181, 230)),
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 127, 181, 230)),
                       ),
                     ),
                   ],

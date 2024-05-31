@@ -16,9 +16,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       emit(SignInProcess());
       try {
         await _userRepository.signIn(event.email, event.password);
-        emit(SignInSuccess());
+        emit(const SignInSuccess(message: 'Welcome!'));
       } on FirebaseAuthException catch (e) {
-        emit(SignInFailure(message: e.code));
+        emit(SignInFailure(message: e.message?? 'An unknown error occurred.'));
       } catch (e) {
         emit(const SignInFailure());
       }

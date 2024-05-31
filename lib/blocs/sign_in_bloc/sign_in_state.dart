@@ -9,12 +9,16 @@ sealed class SignInState extends Equatable {
 
 final class SignInInitial extends SignInState {}
 
-class SignInSuccess extends SignInState {}
+class SignInSuccess extends SignInState {
+  final String? message;
+
+  const SignInSuccess({this.message = 'Signed in successfully!'});
+}
 
 class SignInFailure extends SignInState {
   final String? message;
 
-  const SignInFailure({this.message});
+  const SignInFailure({this.message = ''});
 }
 
 class SignInProcess extends SignInState {}

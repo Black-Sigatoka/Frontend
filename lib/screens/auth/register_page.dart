@@ -2,13 +2,13 @@
 
 import 'package:black_sigatoka/blocs/sign_up_bloc/sign_up_bloc.dart';
 import 'package:black_sigatoka/custom_widgets/custom_appbar.dart';
-import 'package:black_sigatoka/screens/diagnosis_page.dart';
 import 'package:black_sigatoka/screens/auth/components/custom_textformfield.dart';
 import 'package:black_sigatoka/screens/auth/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_repository/user_repository.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -40,16 +40,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
             setState(() {
               signUpRequired = false;
             });
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => DiagnosisScreen()));
+
+            //display toast message for successful sign up
+            Fluttertoast.showToast(
+                msg: state.message ?? 'Signed up successfully!',
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 16.0);
+
+            // Navigate to the next screen with a slight delay
+            Future.delayed(Duration(seconds: 1), () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()));
+            });
           } else if (state is SignUpProcess) {
             setState(() {
               signUpRequired = true;
             });
           } else if (state is SignUpFailure) {
-            setState(() {
-              return;
-            });
+            Fluttertoast.showToast(
+                msg: state.message ?? 'An unexpected error occurred!',
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0
+              );
           }
         },
         child: Scaffold(
@@ -127,7 +145,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 hintText: 'Enter your password',
                                 obscureText: obscurePassword,
                                 keyboardType: TextInputType.visiblePassword,
-                                prefixIcon: const Icon(CupertinoIcons.lock_fill),
+                                prefixIcon:
+                                    const Icon(CupertinoIcons.lock_fill),
                                 onChanged: (val) {
                                   if (val!.contains(RegExp(r'[A-Z]'))) {
                                     setState(() {
