@@ -133,7 +133,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                   ),
                 ),
               ),
-
               Container(
                 width: 300,
                 height: 50,
@@ -153,7 +152,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-
               Container(
                 width: 300,
                 height: 50,
@@ -172,8 +170,29 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 35),
 
+              const SizedBox(height: 10),
+
+              Container(
+                width: 300,
+                height: 50,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.only(top: 10, bottom: 15),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  'Requires internet connection',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              
+              const SizedBox(height: 35),
               Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.only(top: 10),
