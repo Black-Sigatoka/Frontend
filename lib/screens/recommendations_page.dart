@@ -1,12 +1,9 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'dart:developer';
-// import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-// import 'package:black_sigatoka/utils/recommendation_utils.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 
 class RecommendationScreen extends StatefulWidget {
   final String diseaseSeverity;
