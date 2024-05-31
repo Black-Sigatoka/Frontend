@@ -3,8 +3,9 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:black_sigatoka/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:black_sigatoka/screens/recommendations_page.dart';
+import 'package:black_sigatoka/screens/auth/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -113,164 +114,165 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
           IconButton(
               onPressed: () {
                 context.read<SignInBloc>().add(const SignOutRequired());
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
               },
               icon: const Icon(Icons.logout))
         ],
       ),
       body: PageView(
         children: <Widget>[
-          Column(
-            children: [
-              const SizedBox(height: 20),
-              Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(top: 10, bottom: 25),
-                child: Text(
-                  'Limitations',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 17,
-                  ),
-                ),
-              ),
-              Container(
-                width: 300,
-                height: 50,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(top: 10, bottom: 15),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  'Best to use youngest leaf spotted',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                width: 300,
-                height: 50,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(top: 10, bottom: 15),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  'Does not diagnose half leaf images',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 10),
-
-              Container(
-                width: 300,
-                height: 50,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(top: 10, bottom: 15),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  'Requires internet connection',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              
-              const SizedBox(height: 35),
-              Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(top: 10),
-                height: 150,
-                width: 200,
-                color: Colors.grey[300], // Placeholder background color
-                child: _imageFile != null
-                    ? Image.file(
-                        _imageFile!,
-                        height: 150,
-                        fit: BoxFit.cover,
-                      )
-                    : Icon(
-                        Icons.image,
-                        size: 50,
-                        color: Colors.grey[400], // Image icon color
-                      ),
-              ),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.only(left: 74.0, right: 74.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    _showImagePicker(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 127, 181, 230),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 20),
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.only(top: 10, bottom: 25),
+                  child: Text(
+                    'Limitations',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 17,
                     ),
                   ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.photo_camera_back),
-                      Padding(
-                        padding: EdgeInsets.only(left: 8),
-                        child: Text("Scan"),
-                      ),
-                    ],
+                ),
+                Container(
+                  width: 300,
+                  height: 50,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.only(top: 10, bottom: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    'Best to use youngest leaf spotted',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 15,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.only(left: 74.0, right: 74.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_imageFile != null) {
-                      saveIMage(_imageFile!);
-                    } else {
-                      log("image file is empty");
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lightBlue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    minimumSize: const Size(2, 35),
+                const SizedBox(height: 10),
+                Container(
+                  width: 300,
+                  height: 50,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.only(top: 10, bottom: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  child: _isLoading
-                      ? CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white),
+                  child: Text(
+                    'Does not diagnose half leaf images',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  width: 300,
+                  height: 50,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.only(top: 10, bottom: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    'Requires internet connection',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 35),
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.only(top: 10),
+                  height: 150,
+                  width: 200,
+                  color: Colors.grey[300], // Placeholder background color
+                  child: _imageFile != null
+                      ? Image.file(
+                          _imageFile!,
+                          height: 150,
+                          fit: BoxFit.cover,
                         )
-                      : const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 8),
-                              child: Text("Diagnose"),
-                            ),
-                          ],
+                      : Icon(
+                          Icons.image,
+                          size: 50,
+                          color: Colors.grey[400], // Image icon color
                         ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.only(left: 74.0, right: 74.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _showImagePicker(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 127, 181, 230),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.photo_camera_back),
+                        Padding(
+                          padding: EdgeInsets.only(left: 8),
+                          child: Text("Scan"),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.only(left: 74.0, right: 74.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_imageFile != null) {
+                        saveIMage(_imageFile!);
+                      } else {
+                        log("image file is empty");
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightBlue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      minimumSize: const Size(2, 35),
+                    ),
+                    child: _isLoading
+                        ? CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
+                          )
+                        : const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 8),
+                                child: Text("Diagnose"),
+                              ),
+                            ],
+                          ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
