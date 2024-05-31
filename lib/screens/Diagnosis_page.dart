@@ -3,7 +3,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:black_sigatoka/blocs/sign_in_bloc/sign_in_bloc.dart';
-// import 'package:black_sigatoka/custom_widgets/custom_bottomnavbar.dart';
 import 'package:black_sigatoka/screens/recommendations_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,21 +23,6 @@ class DiagnosisScreen extends StatefulWidget {
 class _DiagnosisScreenState extends State<DiagnosisScreen> {
   bool _isLoading = false;
   File? _imageFile;
-
-  // int _currentIndex = 0;
-  final PageController _pageController = PageController();
-
-  // void _onItemTapped(int index) {
-  //   setState(() {
-  //     _currentIndex = index;
-  //     _pageController.animateToPage(
-  //       index,
-  //       duration: Duration(milliseconds: 300),
-  //       curve: Curves.easeInOut,
-  //     );
-  //   });
-  //   //implement navigation logic here
-  // }
 
   Future<void> _pickImage(ImageSource source) async {
     final picker = ImagePicker();
@@ -134,11 +118,62 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
         ],
       ),
       body: PageView(
-        controller: _pageController,
         children: <Widget>[
           Column(
             children: [
-              const SizedBox(height: 150),
+              const SizedBox(height: 20),
+              Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.only(top: 10, bottom: 25),
+                child: Text(
+                  'Limitations',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 17,
+                  ),
+                ),
+              ),
+
+              Container(
+                width: 300,
+                height: 50,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.only(top: 10, bottom: 15),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  'Only test banana leaf images',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+
+              Container(
+                width: 300,
+                height: 50,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.only(top: 10, bottom: 15),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  'Does not diagnose half leaf images',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 35),
+
               Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.only(top: 10),
@@ -194,26 +229,26 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lightBlue, 
+                    backgroundColor: Colors.lightBlue,
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(12.0),
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
-                    minimumSize: const Size(2, 35), 
+                    minimumSize: const Size(2, 35),
                   ),
-                  child: _isLoading 
-                  ? CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  )
-                  : const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 8),
-                        child: Text("Diagnose"),
-                      ),
-                    ],
-                  ),
+                  child: _isLoading
+                      ? CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        )
+                      : const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 8),
+                              child: Text("Diagnose"),
+                            ),
+                          ],
+                        ),
                 ),
               ),
             ],
@@ -221,10 +256,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
           RecommendationScreen(diseaseSeverity: 'severity'),
         ],
       ),
-      // bottomNavigationBar: CustomBottomNavigationBar(
-      //   currentIndex: _currentIndex,
-      //   onTap: _onItemTapped,
-      // ),
     );
   }
 
