@@ -51,7 +51,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
     } catch (error) {
       log(error.toString()); // Log the error for debugging
       setState(() {
-        errorMessage = "An error occurred while fetching recommendations.";
+        errorMessage = "An error occurred while fetching recommendations. Check internet connection.";
       });
     } finally {
       setState(() {
