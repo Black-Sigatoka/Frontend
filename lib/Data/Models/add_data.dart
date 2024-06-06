@@ -42,7 +42,7 @@ class StoreData {
   Future<dynamic> sendInferenceRequest(String imageUrl) async {
     const endpointUrl =
         "https://yolo-endpoint.westus.inference.ml.azure.com/score";
-    const apiKey = "kq52ue6vvgkzhDGwdGSB4wVDdXL4u2hy"; // Replace with your API key
+    const apiKey = "OQEdMNm8LMuJHzJCS4S2ydFlgEQvRDuw"; // Replace with your API key
 
     final headers = {
       'Content-Type': 'application/json',
