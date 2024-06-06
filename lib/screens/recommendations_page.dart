@@ -20,7 +20,6 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
   String? errorMessage;
 
   Future<void> getRecommendations(String severity) async {
-    await Future.delayed(const Duration(seconds: 2)); // Simulate a network delay
     setState(() {
       isLoading = true;
       errorMessage = null;
@@ -53,6 +52,23 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
         isLoading = false;
       });
     }
+  }
+
+  List<Widget> buildRecommendations(String recommendations) {
+    List<String> recommendationList = recommendations.split('.');
+    return recommendationList
+        .where((rec) => rec.trim().isNotEmpty) // Filter out empty recommendations
+        .map((rec) => Card(
+              margin: EdgeInsets.symmetric(vertical: 8.0),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  rec.trim(),
+                  style: TextStyle(fontSize: 16.0),
+                ),
+              ),
+            ))
+        .toList();
   }
 
   @override
@@ -110,10 +126,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
                   ],
                 ),
               if (recommendation != null)
-                Text(
-                  'Recommendation: $recommendation',
-                  style: const TextStyle(fontSize: 16.0),
-                ),
+                ...buildRecommendations(recommendation!),
               if (errorMessage != null)
                 Text(
                   'Error: $errorMessage',
