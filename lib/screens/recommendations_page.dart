@@ -39,9 +39,15 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
             'Provide remedies for Black Sigatoka disease based on the $severity severity level')
       ];
       final response = await model.generateContent(content);
-      setState(() {
-        recommendation = response.text;
-      });
+      if (response.text != null) {
+        setState(() {
+          recommendation = cleanText(response.text!);
+        });
+      } else {
+        setState(() {
+          errorMessage = "Failed to fetch recommendations.";
+        });
+      }
     } catch (error) {
       log(error.toString()); // Log the error for debugging
       setState(() {
@@ -52,6 +58,11 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
         isLoading = false;
       });
     }
+  }
+
+  String cleanText(String text) {
+    // Remove asterisks and trim the text
+    return text.replaceAll('*', '').trim();
   }
 
   List<Widget> buildRecommendations(String recommendations) {
