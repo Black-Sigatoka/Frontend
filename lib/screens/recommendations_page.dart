@@ -68,7 +68,8 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
   List<Widget> buildRecommendations(String recommendations) {
     List<String> recommendationList = recommendations.split('.');
     return recommendationList
-        .where((rec) => rec.trim().isNotEmpty) // Filter out empty recommendations
+        .where(
+            (rec) => rec.trim().isNotEmpty) // Filter out empty recommendations
         .map((rec) => Card(
               margin: EdgeInsets.symmetric(vertical: 8.0),
               child: Padding(
