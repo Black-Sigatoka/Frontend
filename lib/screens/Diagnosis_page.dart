@@ -85,9 +85,8 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+          padding: const EdgeInsets.only(left: 90),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(
                 child: Image.asset(
