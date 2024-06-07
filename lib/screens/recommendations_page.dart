@@ -82,48 +82,60 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
     ];
   }
 
-Future<void> _saveAsFile(String content) async {
+ Future<void> _saveAsFile(String content) async {
     // Request storage permission
-    final status = await Permission.storage.request();
-    if (!status.isGranted) {
+    if (await Permission.storage.request().isGranted) {
+      final pdf = pw.Document();
+      pdf.addPage(
+        pw.Page(
+          build: (pw.Context context) {
+            return pw.Center(
+              child: pw.Text(content),
+            );
+          },
+        ),
+      );
+
+      final bytes = await pdf.save();
+
+      // Get the Downloads directory
+      Directory? directory;
+      if (Platform.isAndroid) {
+        directory = await getExternalStorageDirectory();
+      } else if (Platform.isIOS) {
+        directory = await getApplicationDocumentsDirectory();
+      }
+
+      if (directory != null) {
+        final downloadsDir = Directory('${directory.path}/Download');
+        if (!downloadsDir.existsSync()) {
+          downloadsDir.createSync(recursive: true);
+        }
+        final filePath = '${downloadsDir.path}/recommendations.pdf';
+        final file = File(filePath);
+        await file.writeAsBytes(bytes);
+
+        log('PDF saved at: $filePath'); // Log the file path for debugging
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('PDF downloaded successfully at $filePath'),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Could not find storage directory'),
+          ),
+        );
+      }
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Storage permission is required to save the file'),
         ),
       );
-      return;
     }
-
-    final pdf = pw.Document();
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) {
-          return pw.Center(
-            child: pw.Text(content),
-          );
-        },
-      ),
-    );
-
-    final bytes = await pdf.save();
-
-    // Get the Downloads directory
-    final directory = await getExternalStorageDirectory();
-    final downloadsDir = Directory('${directory!.path}/Download');
-    if (!downloadsDir.existsSync()) {
-      downloadsDir.createSync(recursive: true);
-    }
-    final filePath = '${downloadsDir.path}/recommendations.pdf';
-    final file = File(filePath);
-    await file.writeAsBytes(bytes);
-
-    log('PDF saved at: $filePath'); // Log the file path for debugging
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('PDF downloaded successfully at $filePath'),
-      ),
-    );
   }
 
   @override
