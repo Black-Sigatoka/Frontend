@@ -15,33 +15,31 @@ class RecommendationScreen extends StatefulWidget {
 }
 
 class _RecommendationScreenState extends State<RecommendationScreen> {
-  final TextEditingController _controller = TextEditingController();
-  final List<Map<String, String>> messages = [];
+  String? recommendation;
   bool isLoading = false;
   String? errorMessage;
-  String conversationHistory = '';
+  final TextEditingController _controller = TextEditingController();
+  final List<Map<String, String>> messages = [];
 
-  Future<void> getRecommendations(String query) async {
+  Future<void> getRecommendations(String severity) async {
     setState(() {
       isLoading = true;
       errorMessage = null;
+      recommendation = null;
     });
 
     try {
-      const apiKey = 'AIzaSyBMtpXp1vj-mH_p0649-qU49NHqwnAl6QQ';
-
-      if (apiKey == null) {
-        throw Exception('API_KEY environment variable not found');
-      }
+      const apiKey = 'YOUR_API_KEY_HERE';
 
       final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
-      final content = [Content.text('$conversationHistory\nUser: $query\nBot:')];
+      final content = [
+        Content.text(
+            'Provide remedies for Black Sigatoka disease based on the $severity severity level')
+      ];
       final response = await model.generateContent(content);
       if (response.text != null) {
         setState(() {
-          String cleanedResponse = cleanText(response.text!);
-          messages.add({"user": query, "bot": cleanedResponse});
-          conversationHistory += '\nUser: $query\nBot: $cleanedResponse';
+          recommendation = cleanText(response.text!);
         });
       } else {
         setState(() {
@@ -60,9 +58,57 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
     }
   }
 
+  Future<void> getChatResponse(String query) async {
+    setState(() {
+      isLoading = true;
+      errorMessage = null;
+    });
+
+    try {
+      const apiKey = 'YOUR_API_KEY_HERE';
+
+      final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
+      final content = [Content.text(query)];
+      final response = await model.generateContent(content);
+      if (response.text != null) {
+        setState(() {
+          final cleanResponse = cleanText(response.text!);
+          messages.add({"user": query, "bot": cleanResponse});
+        });
+      } else {
+        setState(() {
+          errorMessage = "Failed to fetch response.";
+        });
+      }
+    } catch (error) {
+      log(error.toString()); // Log the error for debugging
+      setState(() {
+        errorMessage = "An error occurred while fetching response. Check internet connection.";
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   String cleanText(String text) {
-    // Remove asterisks, replace 'eg' with 'for example', and trim the text
     return text.replaceAll('*', '').replaceAll('eg', 'for example').trim();
+  }
+
+  List<Widget> buildRecommendations(String recommendations) {
+    return [
+      Card(
+        margin: EdgeInsets.symmetric(vertical: 8.0),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            recommendations,
+            style: TextStyle(fontSize: 16.0),
+          ),
+        ),
+      )
+    ];
   }
 
   @override
@@ -98,84 +144,107 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: ListView.builder(
-                itemCount: messages.length,
-                itemBuilder: (context, index) {
-                  final message = messages[index];
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Card(
-                        margin: EdgeInsets.symmetric(vertical: 8.0),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(
-                            "User: ${message['user']}",
-                            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                          ),
-                        ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Black Sigatoka Severity: ${widget.diseaseSeverity}',
+                      style: const TextStyle(fontSize: 15.0),
+                    ),
+                    const SizedBox(height: 20.0),
+                    ElevatedButton(
+                      onPressed: () async {
+                        await getRecommendations(widget.diseaseSeverity);
+                      },
+                      child: const Text('Get Recommendations'),
+                    ),
+                    const SizedBox(height: 20.0),
+                    if (isLoading)
+                      Row(
+                        children: const [
+                          CircularProgressIndicator(),
+                          SizedBox(width: 10.0),
+                          Text('Fetching Recommendations...'),
+                        ],
                       ),
-                      Card(
-                        margin: EdgeInsets.symmetric(vertical: 8.0),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(
-                            "Bot: ${message['bot']}",
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                        ),
+                    if (recommendation != null)
+                      ...buildRecommendations(recommendation!),
+                    if (errorMessage != null)
+                      Text(
+                        'Error: $errorMessage',
+                        style: const TextStyle(fontSize: 16.0, color: Colors.red),
                       ),
-                    ],
-                  );
-                },
+                  ],
+                ),
               ),
             ),
           ),
-          if (isLoading)
+          if (recommendation != null) ...[
+            Divider(),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  itemCount: messages.length,
+                  itemBuilder: (context, index) {
+                    final message = messages[index];
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Card(
+                          margin: EdgeInsets.symmetric(vertical: 8.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              "User: ${message['user']}",
+                              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        Card(
+                          margin: EdgeInsets.symmetric(vertical: 8.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              "Bot: ${message['bot']}",
+                              style: TextStyle(fontSize: 16.0),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
-                children: const [
-                  CircularProgressIndicator(),
-                  SizedBox(width: 10.0),
-                  Text('Fetching Recommendations...'),
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        hintText: 'Ask a question...',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.send),
+                    onPressed: () async {
+                      final query = _controller.text.trim();
+                      if (query.isNotEmpty) {
+                        _controller.clear();
+                        await getChatResponse(query);
+                      }
+                    },
+                  ),
                 ],
               ),
             ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      hintText: 'Ask a question...',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () async {
-                    final query = _controller.text.trim();
-                    if (query.isNotEmpty) {
-                      _controller.clear();
-                      await getRecommendations(query);
-                    }
-                  },
-                ),
-              ],
-            ),
-          ),
-          if (errorMessage != null)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Error: $errorMessage',
-                style: const TextStyle(fontSize: 16.0, color: Colors.red),
-              ),
-            ),
+          ],
         ],
       ),
     );
