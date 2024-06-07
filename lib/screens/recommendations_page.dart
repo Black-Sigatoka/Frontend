@@ -83,7 +83,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Padding(
-          padding: const EdgeInsets.only(left: 50),
+          padding: const EdgeInsets.only(left: 10),
           child: Row(
             children: [
               Image.asset(

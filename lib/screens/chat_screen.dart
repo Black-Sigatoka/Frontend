@@ -70,7 +70,7 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Padding(
-          padding: const EdgeInsets.only(left: 90),
+          padding: const EdgeInsets.only(left: 30),
           child: Row(
             children: [
               Image.asset(
