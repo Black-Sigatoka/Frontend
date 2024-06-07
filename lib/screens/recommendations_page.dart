@@ -62,7 +62,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
 
   String cleanText(String text) {
     // Remove asterisks and trim the text
-    return text.replaceAll('*', '').trim();
+    return text.replaceAll('*', '').trim().replaceAll('eg', 'for example').trim();
   }
 
   List<Widget> buildRecommendations(String recommendations) {
