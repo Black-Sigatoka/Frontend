@@ -82,36 +82,27 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
     ];
   }
 
- Future<void> _saveAsFile(String content) async {
-    // Request storage permission
-    if (await Permission.storage.request().isGranted) {
-      final pdf = pw.Document();
-      pdf.addPage(
-        pw.Page(
-          build: (pw.Context context) {
-            return pw.Center(
-              child: pw.Text(content),
-            );
-          },
-        ),
-      );
+   Future<void> _saveAsFile(String content) async {
+    final pdf = pw.Document();
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Center(
+            child: pw.Text(content),
+          );
+        },
+      ),
+    );
 
-      final bytes = await pdf.save();
+    final bytes = await pdf.save();
 
-      // Get the Downloads directory
-      Directory? directory;
-      if (Platform.isAndroid) {
-        directory = await getExternalStorageDirectory();
-      } else if (Platform.isIOS) {
-        directory = await getApplicationDocumentsDirectory();
-      }
+    try {
+      // Request permission to access external storage
+      var status = await Permission.storage.request();
 
-      if (directory != null) {
-        final downloadsDir = Directory('${directory.path}/Download');
-        if (!downloadsDir.existsSync()) {
-          downloadsDir.createSync(recursive: true);
-        }
-        final filePath = '${downloadsDir.path}/recommendations.pdf';
+      if (status.isGranted) {
+        final directory = await getExternalStorageDirectory();
+        final filePath = '${directory!.path}/recommendations.pdf';
         final file = File(filePath);
         await file.writeAsBytes(bytes);
 
@@ -125,19 +116,19 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Could not find storage directory'),
+            content: Text('Storage permission denied'),
           ),
         );
       }
-    } else {
+    } catch (e) {
+      log('Error saving PDF: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Storage permission is required to save the file'),
+          content: Text('Failed to save PDF'),
         ),
       );
     }
   }
-
   @override
   Widget build(BuildContext context) {
     final recommendation =
