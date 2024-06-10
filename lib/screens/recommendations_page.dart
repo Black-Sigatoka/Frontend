@@ -49,7 +49,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
         Provider.of<RecommendationState>(context, listen: false)
             .setRecommendation(cleanResponse);
         Provider.of<UserHistoryState>(context, listen: false)
-            .addHistory(severity, cleanResponse);
+            .addHistory(severity, cleanResponse, "Default Diagnosis", "Default date");
       } else {
         setState(() {
           errorMessage = "Failed to fetch recommendations.";

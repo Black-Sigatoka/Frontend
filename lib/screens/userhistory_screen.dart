@@ -1,3 +1,4 @@
+import 'package:black_sigatoka/screens/historydetailscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:black_sigatoka/utils/user_history_state.dart';
@@ -23,7 +24,7 @@ class UserHistoryScreen extends StatelessWidget {
               ),
               const SizedBox(width: 5),
               Text(
-                'User History and Analytics'.toUpperCase(),
+                'User History'.toUpperCase(),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                     fontSize: 18,
@@ -38,12 +39,30 @@ class UserHistoryScreen extends StatelessWidget {
         itemCount: userHistory.length,
         itemBuilder: (context, index) {
           final history = userHistory[index];
-          return ListTile(
-            title: Text('Diagnosis: ${history.diagnosis}'),
-            subtitle: Text('Recommendation: ${history.recommendation}\nDate: ${history.date}'),
+          return Card(
+            margin: const EdgeInsets.all(8.0),
+            child: ListTile(
+              title: Text('Diagnosis ID: ${history.id}'),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Date: ${history.date}'),
+                  Text('Severity: ${history.severity}'),
+                ],
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HistoryDetailScreen(history: history),
+                  ),
+                );
+              },
+            ),
           );
         },
       ),
     );
   }
 }
+

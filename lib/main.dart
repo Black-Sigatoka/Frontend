@@ -4,6 +4,8 @@ import 'package:black_sigatoka/app.dart';
 import 'package:black_sigatoka/firebase_options.dart';
 import 'package:black_sigatoka/simple_bloc_observer.dart';
 import 'package:black_sigatoka/utils/recommendation_state.dart';
+import 'package:black_sigatoka/utils/user_history_state.dart'; 
+
 import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,11 +25,12 @@ Future<void> main() async {
   Bloc.observer = SimpleBlocObserver();
 
   runApp(
-    ChangeNotifierProvider(
-      create: (context) =>
-          RecommendationState(), // Provide your ChangeNotifier here
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => RecommendationState()),
+        ChangeNotifierProvider(create: (context) => UserHistoryState()), 
+      ],
       child: MyApp(FirebaseUserRepo()),
     ),
   );
-  // MyApp(FirebaseUserRepo()));
 }
