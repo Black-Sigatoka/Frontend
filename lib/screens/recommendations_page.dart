@@ -1,16 +1,18 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:developer';
-import 'dart:io';
+// import 'dart:io';
 
+import 'package:black_sigatoka/screens/userhistory_screen.dart';
+import 'package:black_sigatoka/utils/user_history_state.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:black_sigatoka/utils/recommendation_state.dart';
 import 'chat_screen.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:pdf/widgets.dart' as pw;
+// import 'package:path_provider/path_provider.dart';
+// import 'package:pdf/widgets.dart' as pw;
 
 class RecommendationScreen extends StatefulWidget {
   final String diseaseSeverity;
@@ -41,10 +43,13 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
             'Provide remedies for Black Sigatoka disease based on the $severity severity level')
       ];
       final response = await model.generateContent(content);
+
       if (response.text != null) {
         final cleanResponse = cleanText(response.text!);
         Provider.of<RecommendationState>(context, listen: false)
             .setRecommendation(cleanResponse);
+        Provider.of<UserHistoryState>(context, listen: false)
+            .addHistory(severity, cleanResponse);
       } else {
         setState(() {
           errorMessage = "Failed to fetch recommendations.";
@@ -82,53 +87,54 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
     ];
   }
 
-   Future<void> _saveAsFile(String content) async {
-    final pdf = pw.Document();
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) {
-          return pw.Center(
-            child: pw.Text(content),
-          );
-        },
-      ),
-    );
+  // Future<void> _saveAsFile(String content) async {
+  //   final pdf = pw.Document();
+  //   pdf.addPage(
+  //     pw.Page(
+  //       build: (pw.Context context) {
+  //         return pw.Center(
+  //           child: pw.Text(content),
+  //         );
+  //       },
+  //     ),
+  //   );
 
-    final bytes = await pdf.save();
+  //   final bytes = await pdf.save();
 
-    try {
-      // Request permission to access external storage
-      var status = await Permission.storage.request();
+  //   try {
+  //     // Request permission to access external storage
+  //     var status = await Permission.storage.request();
 
-      if (status.isGranted) {
-        final directory = await getExternalStorageDirectory();
-        final filePath = '${directory!.path}/recommendations.pdf';
-        final file = File(filePath);
-        await file.writeAsBytes(bytes);
+  //     if (status.isGranted) {
+  //       final directory = await getExternalStorageDirectory();
+  //       final filePath = '${directory!.path}/recommendations.pdf';
+  //       final file = File(filePath);
+  //       await file.writeAsBytes(bytes);
 
-        log('PDF saved at: $filePath'); // Log the file path for debugging
+  //       log('PDF saved at: $filePath'); // Log the file path for debugging
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('PDF downloaded successfully at $filePath'),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Storage permission denied'),
-          ),
-        );
-      }
-    } catch (e) {
-      log('Error saving PDF: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Failed to save PDF'),
-        ),
-      );
-    }
-  }
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text('PDF downloaded successfully at $filePath'),
+  //         ),
+  //       );
+  //     } else {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(
+  //           content: Text('Storage permission denied'),
+  //         ),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     log('Error saving PDF: $e');
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text('Failed to save PDF'),
+  //       ),
+  //     );
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     final recommendation =
@@ -187,12 +193,12 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
               if (recommendation.isNotEmpty) ...[
                 ...buildRecommendations(recommendation),
                 const SizedBox(height: 20.0),
-                ElevatedButton(
-                  onPressed: () async {
-                    await _saveAsFile(recommendation);
-                  },
-                  child: const Text('Download PDF'),
-                ),
+                // ElevatedButton(
+                //   onPressed: () async {
+                //     await _saveAsFile(recommendation);
+                //   },
+                //   child: const Text('Download PDF'),
+                // ),
                 const SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: () {
@@ -204,6 +210,17 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
                     );
                   },
                   child: const Text('Ask Follow-up Questions'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const UserHistoryScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text('User History'),
                 ),
               ],
               if (errorMessage != null)
