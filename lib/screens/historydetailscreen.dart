@@ -1,11 +1,10 @@
-
 import 'package:black_sigatoka/utils/user_history_state.dart';
 import 'package:flutter/material.dart';
 
 class HistoryDetailScreen extends StatelessWidget {
   final HistoryItem history;
 
-  const HistoryDetailScreen({super.key, required this.history});
+  const HistoryDetailScreen({Key? key, required this.history}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +22,13 @@ class HistoryDetailScreen extends StatelessWidget {
               ),
               const SizedBox(width: 5),
               Text(
-                'History Detail'.toUpperCase(),
+                'History Details'.toUpperCase(),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
             ],
           ),
@@ -36,19 +36,27 @@ class HistoryDetailScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Diagnosis ID: ${history.id}', style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10.0),
-            Text('Date: ${history.date}', style: const TextStyle(fontSize: 16.0)),
-            const SizedBox(height: 10.0),
-            Text('Severity: ${history.severity}', style: const TextStyle(fontSize: 16.0)),
-            const SizedBox(height: 10.0),
-            Text('Diagnosis: ${history.diagnosis}', style: const TextStyle(fontSize: 16.0)),
-            const SizedBox(height: 10.0),
-            Text('Recommendation: ${history.recommendation}', style: const TextStyle(fontSize: 16.0)),
-          ],
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Diagnosis ID: ${history.id}',
+                    style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 10.0),
+                  Text('Date: ${history.date}', style: const TextStyle(fontSize: 16.0)),
+                  const SizedBox(height: 10.0),
+                  Text('Severity: ${history.severity}', style: const TextStyle(fontSize: 16.0)),
+                  const SizedBox(height: 10.0),
+                  Text('Recommendation: ${history.recommendation}', style: const TextStyle(fontSize: 16.0)),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

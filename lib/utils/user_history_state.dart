@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
 class HistoryItem {
-  final String diagnosis;
   final String recommendation;
-  final String date;
+  final DateTime date;
   final String severity;
-  final String id; 
+  final String id;
 
   HistoryItem({
-    required this.diagnosis,
     required this.recommendation,
     required this.date,
     required this.severity,
@@ -21,13 +19,12 @@ class UserHistoryState with ChangeNotifier {
 
   List<HistoryItem> get history => _history;
 
-  void addHistory(String diagnosis, String recommendation, String date, String severity) {
+  void addHistory(String recommendation, DateTime date, String severity) {
     final newItem = HistoryItem(
-      diagnosis: diagnosis,
       recommendation: recommendation,
       date: date,
       severity: severity,
-      id: generateShortId(), 
+      id: generateShortId(),
     );
     _history.add(newItem);
     notifyListeners();

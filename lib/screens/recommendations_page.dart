@@ -49,7 +49,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
         Provider.of<RecommendationState>(context, listen: false)
             .setRecommendation(cleanResponse);
         Provider.of<UserHistoryState>(context, listen: false)
-            .addHistory(severity, cleanResponse, "Default Diagnosis", "Default date");
+            .addHistory( cleanResponse, DateTime.now(),severity );
       } else {
         setState(() {
           errorMessage = "Failed to fetch recommendations.";
@@ -87,53 +87,6 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
     ];
   }
 
-  // Future<void> _saveAsFile(String content) async {
-  //   final pdf = pw.Document();
-  //   pdf.addPage(
-  //     pw.Page(
-  //       build: (pw.Context context) {
-  //         return pw.Center(
-  //           child: pw.Text(content),
-  //         );
-  //       },
-  //     ),
-  //   );
-
-  //   final bytes = await pdf.save();
-
-  //   try {
-  //     // Request permission to access external storage
-  //     var status = await Permission.storage.request();
-
-  //     if (status.isGranted) {
-  //       final directory = await getExternalStorageDirectory();
-  //       final filePath = '${directory!.path}/recommendations.pdf';
-  //       final file = File(filePath);
-  //       await file.writeAsBytes(bytes);
-
-  //       log('PDF saved at: $filePath'); // Log the file path for debugging
-
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text('PDF downloaded successfully at $filePath'),
-  //         ),
-  //       );
-  //     } else {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         const SnackBar(
-  //           content: Text('Storage permission denied'),
-  //         ),
-  //       );
-  //     }
-  //   } catch (e) {
-  //     log('Error saving PDF: $e');
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text('Failed to save PDF'),
-  //       ),
-  //     );
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -192,13 +145,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
                 ),
               if (recommendation.isNotEmpty) ...[
                 ...buildRecommendations(recommendation),
-                const SizedBox(height: 20.0),
-                // ElevatedButton(
-                //   onPressed: () async {
-                //     await _saveAsFile(recommendation);
-                //   },
-                //   child: const Text('Download PDF'),
-                // ),
+  
                 const SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: () {

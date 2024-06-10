@@ -65,4 +65,3 @@ class UserHistoryScreen extends StatelessWidget {
     );
   }
 }
-
