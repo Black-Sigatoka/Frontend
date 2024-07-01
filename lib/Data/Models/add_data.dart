@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -58,13 +59,13 @@ class StoreData {
           headers: headers, body: jsonEncode(requestData));
       if (response.statusCode == 200) {
         final parsedData = jsonDecode(response.body);
-        print("my type ${parsedData.runtimeType}");
+        log("my type ${parsedData.runtimeType}");
         return parsedData;
       } else {
-        print('Error sending inference request: ${response.statusCode}');
+        log('Error sending inference request: ${response.statusCode}');
       }
     } catch (error) {
-      print('Error sending inference request or parsing response: $error');
+      log('Error sending inference request or parsing response: $error');
     }
   }
 }
